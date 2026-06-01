@@ -1,0 +1,32 @@
+[project]
+name = "geoparquet-testing-scripts"
+version = "0.1.0"
+description = "Generators for the geoparquet-testing corpus"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+
+dependencies = [
+    "pyarrow >= 22.0.0",
+    "geoarrow-pyarrow >= 0.2.0",
+    "numpy >= 2.0.0",
+]
+
+[project.optional-dependencies]
+samples = [
+    "geopandas >= 1.0.0",
+    "shapely >= 2.1.0",
+    "pyproj >= 3.6.0",
+    "duckdb >= 1.0.0",
+    "requests >= 2.31.0",
+]
+tests = [
+    "pytest >= 8.0.0",
+    "jsonschema >= 4.20.0",
+    "referencing >= 0.30.0",
+]
+dev = [
+    "ruff",
+]
+
+[tool.ruff]
+line-length = 100
