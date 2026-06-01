@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# uv
+# (uv.lock is checked in; .venv is not)
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Temp generation output
+/tmp_generated/
+
+# Local planning / spec docs — not committed
+/docs/
