@@ -434,20 +434,20 @@ def register_epoch_violations() -> None:
     from bad_helpers import make_simple_point_table
 
     def writer_epoch_on_unsupported_crs(out: Path) -> None:
-        # EPSG:4326 (plain WGS 84) does not support a dynamic coordinate_epoch
+        # EPSG:4326 (plain WGS 84) does not support a dynamic epoch
         table = make_simple_point_table(["POINT (0 0)"])
         meta = make_geo_metadata(columns={"geometry": {
             "encoding": "WKB",
             "geometry_types": ["Point"],
             "crs": {"type": "GeographicCRS", "id": {"authority": "EPSG", "code": 4326}},
-            "coordinate_epoch": 2024.5,
+            "epoch": 2024.5,
         }})
         write_parquet_deterministic(table, out, meta)
 
     register(BadFile(
         filename="epoch-on-unsupported-crs.parquet",
-        violation="coordinate_epoch set on EPSG:4326 (static datum) which does not support it",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#coordinate_epoch",
+        violation="epoch set on EPSG:4326 (static datum) which does not support it",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#epoch",
         expected_failure="epoch_unsupported",
         writer=writer_epoch_on_unsupported_crs,
     ))
@@ -510,14 +510,14 @@ def register_version_violations() -> None:
         write_parquet_deterministic(table, out, meta)
 
     def writer_v1_with_v2_features(out: Path) -> None:
-        # Declares version 1.0.0 but uses 2.0-only `coordinate_epoch`.
+        # Declares version 1.0.0 but uses 2.0-only `epoch`.
         table = make_simple_point_table(["POINT (0 0)"])
         meta = make_geo_metadata()
         meta["version"] = "1.0.0"
         meta["columns"] = {"geometry": {
             "encoding": "WKB",
             "geometry_types": ["Point"],
-            "coordinate_epoch": 2024.0,
+            "epoch": 2024.0,
         }}
         write_parquet_deterministic(table, out, meta)
 
@@ -530,7 +530,7 @@ def register_version_violations() -> None:
     ))
     register(BadFile(
         filename="version-1-0-with-2-0-features.parquet",
-        violation="version=1.0.0 declared but file uses 2.0-only coordinate_epoch field",
+        violation="version=1.0.0 declared but file uses 2.0-only epoch field",
         spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
         expected_failure="version_feature_mismatch",
         writer=writer_v1_with_v2_features,

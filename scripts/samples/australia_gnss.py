@@ -6,10 +6,10 @@ Source:    SYNTHETIC / hand-curated. ~30 approximate coordinates hand-entered to
 License:   CC0 / public domain (hand-entered approximate coordinates).
 Encoding:  WKB (native geometry, planar edges).
 CRS:       EPSG:7843 (GDA2020), a dynamic datum.
-Showcases: coordinate_epoch + dynamic datum + plate-motion propagation +
+Showcases: epoch + dynamic datum + plate-motion propagation +
            paired files. Two files are produced:
-             - australia-gnss-stations.parquet       coordinate_epoch 2020.0
-             - australia-gnss-stations-2024.parquet  coordinate_epoch 2024.0
+             - australia-gnss-stations.parquet       epoch 2020.0
+             - australia-gnss-stations-2024.parquet  epoch 2024.0
            The 2024 positions are the 2020 positions shifted by the Australian
            plate velocity (~7 cm/yr north, ~2 cm/yr east) over 4 years, using
            the constants in gen_epoch.py. Same 30 rows / row order in both
@@ -89,7 +89,7 @@ def _write(fname: str, epoch: float, dlat: float, dlon: float, out_dir: Path) ->
                 "geometry_types": ["Point"],
                 "crs": CRS_GDA2020,
                 "edges": "planar",
-                "coordinate_epoch": epoch,
+                "epoch": epoch,
             }
         }
     )

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-GEOPARQUET_VERSION = "2.0.0-dev"
+GEOPARQUET_VERSION = "2.0-dev"
 
 
 def make_geo_metadata(
@@ -17,7 +17,7 @@ def make_geo_metadata(
 
     Caller supplies the `columns` mapping (column name -> per-column metadata dict
     with keys `encoding`, `geometry_types`, optionally `crs`, `edges`, `bbox`,
-    `coordinate_epoch`, `orientation`).
+    `epoch`, `orientation`).
     """
     if columns is None:
         columns = {

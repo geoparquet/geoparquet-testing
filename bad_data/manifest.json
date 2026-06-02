@@ -21,8 +21,8 @@
   },
   "epoch-on-unsupported-crs.parquet": {
     "expected_failure": "epoch_unsupported",
-    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#coordinate_epoch",
-    "violation": "coordinate_epoch set on EPSG:4326 (static datum) which does not support it"
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#epoch",
+    "violation": "epoch set on EPSG:4326 (static datum) which does not support it"
   },
   "geo-invalid-json.parquet": {
     "expected_failure": "metadata_invalid_json",
@@ -77,7 +77,7 @@
   "version-1-0-with-2-0-features.parquet": {
     "expected_failure": "version_feature_mismatch",
     "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
-    "violation": "version=1.0.0 declared but file uses 2.0-only coordinate_epoch field"
+    "violation": "version=1.0.0 declared but file uses 2.0-only epoch field"
   },
   "version-unknown.parquet": {
     "expected_failure": "version_unknown",

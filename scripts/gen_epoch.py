@@ -54,7 +54,7 @@ def _write(fname: str, lon: float, lat: float, epoch: float) -> Path:
                 "geometry_types": ["Point"],
                 "crs": CRS_GDA2020,
                 "edges": "planar",
-                "coordinate_epoch": epoch,
+                "epoch": epoch,
             }
         }
     )
@@ -73,11 +73,11 @@ def main() -> None:
     (OUT_DIR / "README.md").write_text(
         "# data/epoch/\n\n"
         "Two files in EPSG:7843 (GDA2020) at the same nominal Sydney location, "
-        "differing only in `coordinate_epoch`. The 2024 file's coordinates are "
+        "differing only in `epoch`. The 2024 file's coordinates are "
         "propagated forward from the 2020 file using Australian plate velocity "
         "(~7 cm/yr north, ~2 cm/yr east) — about 28 cm north over 4 years. "
         "Together these demonstrate that epoch is numerically meaningful.\n\n"
-        "| File | CRS | coordinate_epoch |\n"
+        "| File | CRS | epoch |\n"
         "|---|---|---|\n"
         "| `epoch-itrf2014-2020.parquet` | EPSG:7843 | 2020.0 |\n"
         "| `epoch-itrf2014-2024.parquet` | EPSG:7843 | 2024.0 |\n"

@@ -17,14 +17,14 @@ def _geo(name: str) -> dict:
 def test_2020_has_epoch_2020():
     geo = _geo("epoch-itrf2014-2020.parquet")
     col = geo["columns"]["geometry"]
-    assert col["coordinate_epoch"] == 2020.0
+    assert col["epoch"] == 2020.0
     assert col["crs"]["id"]["code"] == 7843
 
 
 def test_2024_has_epoch_2024():
     geo = _geo("epoch-itrf2014-2024.parquet")
     col = geo["columns"]["geometry"]
-    assert col["coordinate_epoch"] == 2024.0
+    assert col["epoch"] == 2024.0
     assert col["crs"]["id"]["code"] == 7843
 
 
