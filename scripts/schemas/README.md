@@ -5,35 +5,48 @@ Vendored copies of JSON Schemas used by the self-test suite.
 | File | Source | Pinned at |
 |---|---|---|
 | `geoparquet-2.0.0-dev.schema.json` | https://github.com/opengeospatial/geoparquet/blob/main/format-specs/schema.json | 2026-06-02 |
+| `projjson-0.7.schema.json` | https://proj.org/schemas/v0.7/projjson.schema.json | 2026-06-02 |
 
 To refresh:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/opengeospatial/geoparquet/main/format-specs/schema.json \
   -o scripts/schemas/geoparquet-2.0.0-dev.schema.json
+curl -fsSL https://proj.org/schemas/v0.7/projjson.schema.json \
+  -o scripts/schemas/projjson-0.7.schema.json
 ```
 
-## Notes / known mismatches (read before Task 5.2)
+The GeoParquet schema's `crs` property `$ref`s
+`https://proj.org/schemas/v0.7/projjson.schema.json`. The vendored
+`projjson-0.7.schema.json` has a matching `$id`, so
+`tests/test_schema_validation.py` resolves the ref offline via a
+`referencing.Registry` (no network needed).
 
-The vendored schema is the in-development GeoParquet 2.0 schema, but it does **not**
-match our corpus verbatim:
+## Notes / known mismatches
 
-- **Version string:** the schema requires `version` `const: "2.0-dev"`, while every file
-  in our corpus declares `version: "2.0.0-dev"`. As written, all 29 files fail validation
-  on the version field alone. Task 5.2 must account for this (e.g. relax/patch the
-  `version` constraint when validating, or treat the version field specially). Do NOT
-  change the generators to emit `"2.0-dev"` solely to satisfy this schema without a
-  deliberate decision.
-- **Remote `$ref` for CRS:** the column `crs` property references
-  `https://proj.org/schemas/v0.7/projjson.schema.json`. A plain `Draft7Validator` raises
-  an *unresolvable reference* error (not a validation error) when a `crs` is present.
-  Task 5.2 must supply a resolver/registry for the PROJJSON schema or stub the `crs`
-  subschema.
-- **Encoding:** the schema only allows `encoding` `const: "WKB"`. Our corpus uses WKB
-  exclusively (despite filenames like `point-native-geometry.parquet`), so there is no
-  encoding-enum mismatch today. If native/GeoArrow encodings are added later, this schema
-  would reject them.
-- **Coordinate epoch:** the schema's field is named `epoch` (number); our 4 files that
-  carry an epoch use the key `coordinate_epoch`. The column subschema has no
-  `additionalProperties: false`, so `coordinate_epoch` is accepted as an unknown extra key
-  rather than rejected — but it is also not validated against the `epoch` constraint.
+`tests/test_schema_validation.py` validates every file's `geo` metadata against
+the vendored GeoParquet schema. Current status: **9 pass, 20 xfail**.
+
+- **Auth-code-only CRS (the one real open question — 20 xfailed files).** Most
+  of the corpus identifies a CRS by authority code only, e.g.
+  `{"type": "GeographicCRS", "id": {"authority": "OGC", "code": "CRS84"}}`. The
+  PROJJSON v0.7 schema that the GeoParquet schema `$ref`s requires `name` on
+  every CRS object (and `base_crs`/`conversion`/`coordinate_system` on a
+  `ProjectedCRS`), so these minimal reference objects fail strict PROJJSON
+  validation. This is a genuine spec question — is auth-code-only CRS valid
+  PROJJSON? — not a corpus bug. We xfail these files in the test rather than
+  rewriting the generators to emit full PROJJSON. Files that pass use either a
+  `null` crs or full PROJJSON (`crs-default`, `crs-projjson-full`, the
+  `encodings/*` files, `airports-global`).
+- **`geometry_types` Z/M/ZM suffixes: OK.** The schema's `items` pattern is
+  `^(GeometryCollection|(Multi)?(Point|LineString|Polygon))( Z| M| ZM)?$`, so
+  `"LineString ZM"`, `"MultiLineString Z"`, etc. validate fine. The `zm/*`,
+  `gps-trajectory-xyzm`, and `bathymetry-contours` files only xfail because of
+  their auth-code CRS, not the suffix.
+- **Version / epoch: aligned.** The corpus now declares `version: "2.0-dev"`
+  (matching the schema `const`) and uses the `epoch` key (matching the schema's
+  numeric `epoch` field). The earlier `2.0.0-dev` / `coordinate_epoch`
+  mismatches are resolved and no longer cause failures.
+- **Encoding:** the schema allows `encoding` `const: "WKB"`; the corpus uses WKB
+  exclusively, so there is no encoding mismatch today. If native/GeoArrow
+  encodings are added later, this schema would reject them.
