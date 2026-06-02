@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 import importlib
-import pkgutil
 import sys
 from pathlib import Path
 
@@ -27,6 +26,17 @@ SAMPLES = [
     "gps_trajectory",
     "bathymetry_contours",
 ]
+
+# Output parquet filename -> producing module under scripts/samples/.
+FILE_TO_MODULE = {
+    "gps-trajectory-xyzm.parquet": "gps_trajectory",
+    "bathymetry-contours.parquet": "bathymetry_contours",
+    "australia-gnss-stations.parquet": "australia_gnss",
+    "australia-gnss-stations-2024.parquet": "australia_gnss",
+    "airports-global.parquet": "airports_global",
+    "us-states.parquet": "us_states",
+    "buildings-with-centroid.parquet": "buildings_with_centroid",
+}
 
 # Samples not yet produced, with the reason. Documented in samples/README.md by
 # _write_readme() so the note survives README regeneration.
@@ -52,7 +62,6 @@ def main() -> int:
 
     ensure_dir(SAMPLES_DIR)
     targets = SAMPLES if args.only is None else [args.only]
-    written: list[Path] = []
     for name in targets:
         if name not in SAMPLES:
             print(f"unknown sample: {name}", file=sys.stderr)
@@ -67,7 +76,6 @@ def main() -> int:
             continue
         out = mod.generate(SAMPLES_DIR)
         print(f"  wrote samples/{out.name}")
-        written.append(out)
 
     # Re-write samples/README.md indexing whatever exists on disk now.
     _write_readme()
@@ -90,7 +98,8 @@ def _write_readme() -> None:
     ]
     for p in paths:
         size_kb = p.stat().st_size // 1024
-        lines.append(f"| `{p.name}` | {size_kb} | _see header of `scripts/samples/{p.stem.replace('-', '_')}.py`_ |")
+        module = FILE_TO_MODULE.get(p.name, p.stem.replace('-', '_'))
+        lines.append(f"| `{p.name}` | {size_kb} | _see header of `scripts/samples/{module}.py`_ |")
     if DEFERRED_SAMPLES:
         lines += [
             "",

@@ -10,7 +10,7 @@ Encoding:  WKB (native geometry, planar edges).
 CRS:       default — the `crs` field is OMITTED, so readers default to OGC:CRS84
            (lon/lat, WGS 84).
 Showcases: Point geometry with a default (omitted) CRS. Filtered to
-           type == "large_airport" (~470 rows). geometry_types = ["Point"].
+           type == "large_airport" (~1,200 rows). geometry_types = ["Point"].
 
 Columns: ident (str), name (str), iso_country (str), geometry (WKB Point).
 Rows are sorted by `ident` for byte-stable output.
