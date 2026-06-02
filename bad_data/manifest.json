@@ -1,1 +1,112 @@
-{}
+{
+  "bbox-does-not-contain-geometry.parquet": {
+    "expected_failure": "bbox_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#bbox",
+    "violation": "declared bbox [100,100,101,101] excludes all actual geometries (lon/lat 0-10)"
+  },
+  "crs-invalid-projjson.parquet": {
+    "expected_failure": "schema_validation_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#crs",
+    "violation": "crs value is JSON but missing required PROJJSON `type` field"
+  },
+  "crs-mismatch-schema-vs-geo-metadata.parquet": {
+    "expected_failure": "crs_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#crs",
+    "violation": "geo metadata declares EPSG:3857 but coordinates are CRS84 lon/lat"
+  },
+  "edges-spherical-with-planar-antimeridian-line.parquet": {
+    "expected_failure": "edges_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#edges",
+    "violation": "edges=spherical declared but a planar LineString from -179 to 179 implies a line across the long way of the globe"
+  },
+  "epoch-on-unsupported-crs.parquet": {
+    "expected_failure": "epoch_unsupported",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#coordinate_epoch",
+    "violation": "coordinate_epoch set on EPSG:4326 (static datum) which does not support it"
+  },
+  "geo-invalid-json.parquet": {
+    "expected_failure": "metadata_invalid_json",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#metadata",
+    "violation": "`geo` metadata bytes are not valid JSON (trailing comma)"
+  },
+  "geo-invalid-utf8.parquet": {
+    "expected_failure": "metadata_invalid_utf8",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#metadata",
+    "violation": "`geo` metadata bytes contain invalid UTF-8 byte (0xFF)"
+  },
+  "geometry-types-mismatch-declared-point-actual-linestring.parquet": {
+    "expected_failure": "geometry_type_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
+    "violation": "geometry_types declares [\"Point\"] but column contains LineStrings"
+  },
+  "geometry-types-missing-actual-type.parquet": {
+    "expected_failure": "geometry_type_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
+    "violation": "geometry_types declares [\"Polygon\"] but column also contains MultiPolygons"
+  },
+  "missing-columns.parquet": {
+    "expected_failure": "schema_validation_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#file-metadata",
+    "violation": "`geo` metadata is missing required `columns`"
+  },
+  "missing-geo-metadata.parquet": {
+    "expected_failure": "metadata_missing",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#metadata",
+    "violation": "no `geo` key in Parquet schema metadata"
+  },
+  "missing-primary-column.parquet": {
+    "expected_failure": "schema_validation_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#file-metadata",
+    "violation": "`geo` metadata is missing required `primary_column`"
+  },
+  "missing-version.parquet": {
+    "expected_failure": "schema_validation_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#file-metadata",
+    "violation": "`geo` metadata is missing required `version` field"
+  },
+  "orientation-ccw-declared-rings-cw.parquet": {
+    "expected_failure": "orientation_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#winding-order",
+    "violation": "orientation=counterclockwise declared but polygon rings are wound CW"
+  },
+  "primary-column-not-in-columns.parquet": {
+    "expected_failure": "schema_validation_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#file-metadata",
+    "violation": "`primary_column` value does not appear as a key in `columns`"
+  },
+  "version-1-0-with-2-0-features.parquet": {
+    "expected_failure": "version_feature_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+    "violation": "version=1.0.0 declared but file uses 2.0-only coordinate_epoch field"
+  },
+  "version-unknown.parquet": {
+    "expected_failure": "version_unknown",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+    "violation": "version=99.0.0 is not a known GeoParquet version"
+  },
+  "wkb-truncated.parquet": {
+    "expected_failure": "wkb_parse_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+    "violation": "first row's WKB has 8 bytes chopped from the end"
+  },
+  "wkb-with-srid-prefix.parquet": {
+    "expected_failure": "wkb_parse_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+    "violation": "first row uses EWKB SRID prefix (not allowed in GeoParquet)"
+  },
+  "wkb-wrong-type-byte.parquet": {
+    "expected_failure": "wkb_parse_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+    "violation": "first row's WKB header declares LineString but body is a Point"
+  },
+  "zm-declared-xy-actual-xyz.parquet": {
+    "expected_failure": "zm_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
+    "violation": "geometry_types=[Point] but rows are POINT Z"
+  },
+  "zm-declared-xyz-actual-xy.parquet": {
+    "expected_failure": "zm_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
+    "violation": "geometry_types=[Point Z] but rows are 2D POINT"
+  }
+}
