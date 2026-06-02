@@ -20,13 +20,28 @@ from gpqgen.paths import SAMPLES_DIR, ensure_dir
 
 # Sample module name -> human-readable label for README.
 SAMPLES = [
-    "nz_buildings",
     "us_states",
     "airports_global",
     "australia_gnss",
     "buildings_with_centroid",
     "gps_trajectory",
     "bathymetry_contours",
+]
+
+# Samples not yet produced, with the reason. Documented in samples/README.md by
+# _write_readme() so the note survives README regeneration.
+DEFERRED_SAMPLES = [
+    (
+        "nz-building-outlines.parquet",
+        "LINZ NZ Building Outlines (CC-BY 4.0) requires a LINZ Data Service API "
+        "key, which is not available in this environment. See plan Task 4.2.a "
+        "(docs/superpowers/plans/2026-06-01-geoparquet-testing-implementation.md).",
+    ),
+    (
+        "flight-routes-great-circle.parquet",
+        "native-geography logical type not yet supported by the toolchain — see "
+        "docs/superpowers/plans/2026-06-01-geography-logical-type-deferred.md.",
+    ),
 ]
 
 
@@ -76,6 +91,16 @@ def _write_readme() -> None:
     for p in paths:
         size_kb = p.stat().st_size // 1024
         lines.append(f"| `{p.name}` | {size_kb} | _see header of `scripts/samples/{p.stem.replace('-', '_')}.py`_ |")
+    if DEFERRED_SAMPLES:
+        lines += [
+            "",
+            "## Deferred samples",
+            "",
+            "Not yet produced (network/license/toolchain gaps):",
+            "",
+        ]
+        for name, reason in DEFERRED_SAMPLES:
+            lines.append(f"- `{name}` — {reason}")
     (SAMPLES_DIR / "README.md").write_text("\n".join(lines) + "\n")
 
 

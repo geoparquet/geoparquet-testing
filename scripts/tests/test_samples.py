@@ -12,8 +12,9 @@ from gpqgen.paths import SAMPLES_DIR
 # skipped (license, missing source), remove its entry here too.
 # NOTE: flight-routes-great-circle.parquet is deferred (native-geography logical
 # type not yet supported by the toolchain) — see docs/superpowers/plans/2026-06-01-geography-logical-type-deferred.md
+# NOTE: nz-building-outlines.parquet is deferred (needs a LINZ Data Service API
+# key) — see plan Task 4.2.a and the "Deferred samples" note in samples/README.md.
 EXPECTED = [
-    "nz-building-outlines.parquet",
     "us-states.parquet",
     "airports-global.parquet",
     "australia-gnss-stations.parquet",
