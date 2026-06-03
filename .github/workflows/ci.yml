@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  reproduce-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        working-directory: scripts
+        run: uv sync --extra tests
+
+      - name: Regenerate deterministic tiers (data/, bad_data/) into temp dir
+        working-directory: scripts
+        env:
+          GPQGEN_OUTPUT_ROOT: ${{ github.workspace }}/tmp_generated
+        run: |
+          mkdir -p "$GPQGEN_OUTPUT_ROOT"/data "$GPQGEN_OUTPUT_ROOT"/bad_data
+          uv run python gen_encodings.py
+          uv run python gen_crs.py
+          uv run python gen_edges.py
+          uv run python gen_epoch.py
+          uv run python gen_zm.py
+          uv run python gen_multi_geometry.py
+          uv run python gen_orientation.py
+          uv run python gen_bad_data.py
+          # data/README.md is hand-written (Task 2.8), not generated — copy it so the diff matches.
+          cp ../data/README.md "$GPQGEN_OUTPUT_ROOT"/data/README.md
+
+      - name: Diff regenerated deterministic output against committed files
+        run: |
+          for tier in data bad_data; do
+            diff -qr "$tier" "tmp_generated/$tier" \
+              || { echo "::error::Generated $tier differs from committed files. Re-run the generators locally and commit."; exit 1; }
+          done
+
+      - name: Run pytest (validates all tiers incl. committed samples)
+        working-directory: scripts
+        run: uv run --extra tests pytest tests/ -v
+
+      - name: Per-file size budget (samples must be <= 5 MB)
+        run: |
+          oversize=$(find samples -name '*.parquet' -size +5M)
+          if [ -n "$oversize" ]; then
+            echo "::error::Samples over 5 MB budget:"
+            echo "$oversize"
+            exit 1
+          fi
