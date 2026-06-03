@@ -25,24 +25,19 @@ The GeoParquet schema's `crs` property `$ref`s
 ## Notes / known mismatches
 
 `tests/test_schema_validation.py` validates every file's `geo` metadata against
-the vendored GeoParquet schema. Current status: **9 pass, 20 xfail**.
+the vendored GeoParquet schema. Current status: **all files pass**.
 
-- **Auth-code-only CRS (the one real open question — 20 xfailed files).** Most
-  of the corpus identifies a CRS by authority code only, e.g.
-  `{"type": "GeographicCRS", "id": {"authority": "OGC", "code": "CRS84"}}`. The
-  PROJJSON v0.7 schema that the GeoParquet schema `$ref`s requires `name` on
-  every CRS object (and `base_crs`/`conversion`/`coordinate_system` on a
-  `ProjectedCRS`), so these minimal reference objects fail strict PROJJSON
-  validation. This is a genuine spec question — is auth-code-only CRS valid
-  PROJJSON? — not a corpus bug. We xfail these files in the test rather than
-  rewriting the generators to emit full PROJJSON. Files that pass use either a
-  `null` crs or full PROJJSON (`crs-default`, `crs-projjson-full`, the
-  `encodings/*` files, `airports-global`).
+- **CRS is full PROJJSON.** Every file's `crs` is a full PROJJSON v0.7 object
+  (with `name` and, for projected CRSs, `base_crs`/`conversion`/
+  `coordinate_system`), generated once via pyproj and hard-coded in
+  `gpqgen/crs.py`. Earlier the corpus used auth-code-only reference objects such
+  as `{"type": "GeographicCRS", "id": {"authority": "OGC", "code": "CRS84"}}`,
+  which fail strict PROJJSON validation because the v0.7 schema requires `name`
+  on every CRS object. Those files were temporarily xfailed; they now emit full
+  PROJJSON and pass. Files with a `null`/absent crs (`crs-default`) also pass.
 - **`geometry_types` Z/M/ZM suffixes: OK.** The schema's `items` pattern is
   `^(GeometryCollection|(Multi)?(Point|LineString|Polygon))( Z| M| ZM)?$`, so
-  `"LineString ZM"`, `"MultiLineString Z"`, etc. validate fine. The `zm/*`,
-  `gps-trajectory-xyzm`, and `bathymetry-contours` files only xfail because of
-  their auth-code CRS, not the suffix.
+  `"LineString ZM"`, `"MultiLineString Z"`, etc. validate fine.
 - **Version / epoch: aligned.** The corpus now declares `version: "2.0-dev"`
   (matching the schema `const`) and uses the `epoch` key (matching the schema's
   numeric `epoch` field). The earlier `2.0.0-dev` / `coordinate_epoch`

@@ -35,6 +35,7 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from gpqgen.crs import EPSG_5070
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.write import write_parquet_deterministic
 
@@ -42,11 +43,6 @@ URL = (
     "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/"
     "master/geojson/ne_10m_admin_1_states_provinces.geojson"
 )
-
-CRS_EPSG_5070_AUTH = {
-    "type": "ProjectedCRS",
-    "id": {"authority": "EPSG", "code": 5070},
-}
 
 SIMPLIFY_TOLERANCE_M = 200.0
 PRECISION_GRID_M = 1.0
@@ -112,7 +108,7 @@ def generate(out_dir: Path) -> Path:
             "geometry": {
                 "encoding": "WKB",
                 "geometry_types": ["MultiPolygon"],
-                "crs": CRS_EPSG_5070_AUTH,
+                "crs": EPSG_5070,
                 "edges": "planar",
             }
         }

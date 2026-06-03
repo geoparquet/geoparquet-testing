@@ -29,7 +29,8 @@ import pyarrow as pa
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from gen_epoch import CRS_GDA2020, DLAT_PER_YEAR, DLON_PER_YEAR
+from gen_epoch import DLAT_PER_YEAR, DLON_PER_YEAR
+from gpqgen.crs import EPSG_7843
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.write import write_parquet_deterministic
 
@@ -87,7 +88,7 @@ def _write(fname: str, epoch: float, dlat: float, dlon: float, out_dir: Path) ->
             "geometry": {
                 "encoding": "WKB",
                 "geometry_types": ["Point"],
-                "crs": CRS_GDA2020,
+                "crs": EPSG_7843,
                 "edges": "planar",
                 "epoch": epoch,
             }

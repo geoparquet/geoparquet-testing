@@ -7,7 +7,7 @@ behavior.
 | Subdirectory | Files | Axis exercised |
 |---|---|---|
 | [`encodings/`](encodings/) | 6 | Geometry-type (native-geometry; native-geography deferred) |
-| [`crs/`](crs/) | 5 | CRS representation: default, OGC/EPSG auth codes, full PROJJSON |
+| [`crs/`](crs/) | 5 | CRS representation: default (no crs), full PROJJSON by OGC/EPSG id, projected, PROJJSON without id |
 | [`edges/`](edges/) | 2 | `edges: "planar"` vs `"spherical"` (antimeridian-crossing line) |
 | [`epoch/`](epoch/) | 2 | `epoch` with GDA2020 — visible plate-motion shift |
 | [`zm/`](zm/) | 3 | XYZ, XYM, XYZM LineStrings |

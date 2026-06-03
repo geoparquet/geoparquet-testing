@@ -40,7 +40,7 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from gen_crs import CRS_OGC_CRS84_AUTH
+from gpqgen.crs import CRS84
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.write import write_parquet_deterministic
 
@@ -117,13 +117,13 @@ def generate(out_dir: Path) -> Path:
             "footprint": {
                 "encoding": "WKB",
                 "geometry_types": ["MultiPolygon"],
-                "crs": CRS_OGC_CRS84_AUTH,
+                "crs": CRS84,
                 "edges": "planar",
             },
             "centroid": {
                 "encoding": "WKB",
                 "geometry_types": ["Point"],
-                "crs": CRS_OGC_CRS84_AUTH,
+                "crs": CRS84,
                 "edges": "planar",
             },
         },

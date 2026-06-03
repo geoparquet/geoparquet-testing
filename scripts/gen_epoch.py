@@ -10,16 +10,12 @@ import pyarrow as pa
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from gpqgen.crs import EPSG_7843
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.paths import DATA_DIR, ensure_dir
 from gpqgen.write import write_parquet_deterministic
 
 OUT_DIR = DATA_DIR / "epoch"
-
-CRS_GDA2020 = {
-    "type": "GeographicCRS",
-    "id": {"authority": "EPSG", "code": 7843},
-}
 
 # Sydney CBD as of epoch 2020.0
 SYDNEY_2020_LON = 151.2093
@@ -52,7 +48,7 @@ def _write(fname: str, lon: float, lat: float, epoch: float) -> Path:
             "geometry": {
                 "encoding": "WKB",
                 "geometry_types": ["Point"],
-                "crs": CRS_GDA2020,
+                "crs": EPSG_7843,
                 "edges": "planar",
                 "epoch": epoch,
             }

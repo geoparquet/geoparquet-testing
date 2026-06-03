@@ -10,7 +10,7 @@ import pyarrow as pa
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from gen_crs import CRS_EPSG_3857_AUTH, CRS_OGC_CRS84_AUTH
+from gpqgen.crs import CRS84, EPSG_3857
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.paths import DATA_DIR, ensure_dir
 from gpqgen.write import write_parquet_deterministic
@@ -51,7 +51,7 @@ def _write(fname: str, centroids: list[str], centroid_crs: dict) -> Path:
             "footprint": {
                 "encoding": "WKB",
                 "geometry_types": ["MultiPolygon"],
-                "crs": CRS_OGC_CRS84_AUTH,
+                "crs": CRS84,
                 "edges": "planar",
             },
             "centroid": {
@@ -69,9 +69,9 @@ def _write(fname: str, centroids: list[str], centroid_crs: dict) -> Path:
 
 def main() -> None:
     ensure_dir(OUT_DIR)
-    _write("two-geom-columns-same-crs.parquet", CENTROIDS_CRS84, CRS_OGC_CRS84_AUTH)
+    _write("two-geom-columns-same-crs.parquet", CENTROIDS_CRS84, CRS84)
     print("  wrote two-geom-columns-same-crs.parquet")
-    _write("two-geom-columns-different-crs.parquet", CENTROIDS_3857, CRS_EPSG_3857_AUTH)
+    _write("two-geom-columns-different-crs.parquet", CENTROIDS_3857, EPSG_3857)
     print("  wrote two-geom-columns-different-crs.parquet")
 
     (OUT_DIR / "README.md").write_text(

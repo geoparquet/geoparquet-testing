@@ -16,48 +16,12 @@ import pyarrow as pa
 # Make sibling package importable when running as a script
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from gpqgen.crs import CRS84
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.paths import DATA_DIR, ensure_dir
 from gpqgen.write import write_parquet_deterministic
 
 OUT_DIR = DATA_DIR / "encodings"
-
-# CRS84 represented as an OGC auth code dict. Spec-compliant for GeoParquet 2.0.
-CRS_OGC_CRS84: dict[str, Any] = {
-    "$schema": "https://proj.org/schemas/v0.5/projjson.schema.json",
-    "type": "GeographicCRS",
-    "name": "WGS 84 (CRS84)",
-    "datum_ensemble": {
-        "name": "World Geodetic System 1984 ensemble",
-        "members": [
-            {"name": "World Geodetic System 1984 (Transit)"},
-            {"name": "World Geodetic System 1984 (G730)"},
-            {"name": "World Geodetic System 1984 (G873)"},
-            {"name": "World Geodetic System 1984 (G1150)"},
-            {"name": "World Geodetic System 1984 (G1674)"},
-            {"name": "World Geodetic System 1984 (G1762)"},
-            {"name": "World Geodetic System 1984 (G2139)"},
-        ],
-        "ellipsoid": {
-            "name": "WGS 84",
-            "semi_major_axis": 6378137,
-            "inverse_flattening": 298.257223563,
-        },
-        "accuracy": "2.0",
-        "id": {"authority": "EPSG", "code": 6326},
-    },
-    "coordinate_system": {
-        "subtype": "ellipsoidal",
-        "axis": [
-            {"name": "Geodetic longitude", "abbreviation": "Lon", "direction": "east", "unit": "degree"},
-            {"name": "Geodetic latitude",  "abbreviation": "Lat", "direction": "north", "unit": "degree"},
-        ],
-    },
-    "scope": "Horizontal component of 3D system.",
-    "area": "World.",
-    "bbox": {"south_latitude": -90, "west_longitude": -180, "north_latitude": 90, "east_longitude": 180},
-    "id": {"authority": "OGC", "code": "CRS84"},
-}
 
 
 # Geometry-type -> list of WKT strings (last entry is None, second-last is EMPTY).
@@ -122,7 +86,7 @@ def _write_one(geom_key: str, encoding: str) -> Path:
     column_meta: dict[str, Any] = {
         "encoding": "WKB",
         "geometry_types": [GEOMETRY_TYPE_CASE[geom_key]],
-        "crs": CRS_OGC_CRS84,
+        "crs": CRS84,
     }
     # Currently unused (deferred): native-geography variants are not generated yet.
     if encoding == "native-geography":

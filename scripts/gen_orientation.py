@@ -10,7 +10,7 @@ import pyarrow as pa
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from gen_crs import CRS_OGC_CRS84_AUTH
+from gpqgen.crs import CRS84
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.paths import DATA_DIR, ensure_dir
 from gpqgen.write import write_parquet_deterministic
@@ -28,7 +28,7 @@ def _write(fname: str, wkt: str, orientation: str | None) -> Path:
     col_meta = {
         "encoding": "WKB",
         "geometry_types": ["Polygon"],
-        "crs": CRS_OGC_CRS84_AUTH,
+        "crs": CRS84,
         "edges": "planar",
     }
     if orientation is not None:

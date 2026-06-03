@@ -2,13 +2,9 @@
 against the GeoParquet 2.0-dev JSON Schema (with the PROJJSON crs $ref resolved
 from a vendored local copy).
 
-OPEN SPEC QUESTION (xfailed, not silently passed): files whose `crs` is an
-auth-code-only reference object such as
-    {"type": "GeographicCRS", "id": {"authority": "OGC", "code": "CRS84"}}
-fail validation because the PROJJSON v0.7 schema requires `name` on every CRS
-object. These are xfailed by `_has_minimal_authcode_crs` rather than worked
-around in the generators. See the comment above that function for the full
-rationale.
+All `crs` values in the corpus are full PROJJSON v0.7 objects (with `name` and
+all required fields), generated once via pyproj and hard-coded in gpqgen.crs, so
+every file validates cleanly.
 """
 
 import json
@@ -44,28 +40,6 @@ def _all_valid_parquets() -> list[Path]:
     return sorted(paths)
 
 
-# Open spec-fidelity question (GeoParquet / PROJJSON), see module docstring below.
-#
-# Much of the corpus identifies CRSs by authority code only, e.g.
-#   {"type": "GeographicCRS", "id": {"authority": "OGC", "code": "CRS84"}}
-# The PROJJSON v0.7 schema that the GeoParquet schema $refs requires `name` on
-# every CRS object (and `base_crs`/`conversion`/`coordinate_system` on a
-# ProjectedCRS). These minimal auth-code reference objects therefore FAIL strict
-# PROJJSON validation, even though they are a common, useful, and arguably
-# spec-intended way to reference a CRS in GeoParquet.
-#
-# This is a genuine spec question (is auth-code-only CRS valid PROJJSON?), not a
-# corpus bug. We deliberately do NOT rewrite the generators to emit full PROJJSON
-# just to satisfy the schema. Instead we xfail these cases explicitly so the open
-# question stays visible in test output rather than silently passing.
-def _has_minimal_authcode_crs(geo: dict) -> bool:
-    for col in geo.get("columns", {}).values():
-        crs = col.get("crs")
-        if isinstance(crs, dict) and crs and set(crs.keys()) <= {"type", "id"}:
-            return True
-    return False
-
-
 @pytest.mark.parametrize(
     "path",
     _all_valid_parquets(),
@@ -76,13 +50,6 @@ def test_geo_metadata_valid_against_schema(path: Path):
     meta = pf.schema_arrow.metadata or {}
     assert b"geo" in meta, f"{path} has no geo metadata"
     geo = json.loads(meta[b"geo"])
-
-    if _has_minimal_authcode_crs(geo):
-        pytest.xfail(
-            "auth-code-only CRS (e.g. {type, id}) is not accepted by the "
-            "PROJJSON v0.7 schema, which requires `name`. Open spec question; "
-            "see module docstring."
-        )
 
     errors = sorted(_validator().iter_errors(geo), key=lambda e: list(e.path))
     assert not errors, f"{path}: {[e.message for e in errors]}"
