@@ -18,7 +18,7 @@ from referencing import Registry, Resource
 from gpqgen.paths import DATA_DIR, SAMPLES_DIR
 
 SCHEMA_DIR = Path(__file__).resolve().parent.parent / "schemas"
-GEO_SCHEMA_PATH = SCHEMA_DIR / "geoparquet-2.0.0-dev.schema.json"
+GEO_SCHEMA_PATH = SCHEMA_DIR / "geoparquet-2.0-dev.schema.json"
 PROJJSON_SCHEMA_PATH = SCHEMA_DIR / "projjson-0.7.schema.json"
 
 

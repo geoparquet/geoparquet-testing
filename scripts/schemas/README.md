@@ -4,14 +4,14 @@ Vendored copies of JSON Schemas used by the self-test suite.
 
 | File | Source | Pinned at |
 |---|---|---|
-| `geoparquet-2.0.0-dev.schema.json` | https://github.com/opengeospatial/geoparquet/blob/main/format-specs/schema.json | 2026-06-02 |
+| `geoparquet-2.0-dev.schema.json` | https://github.com/opengeospatial/geoparquet/blob/main/format-specs/schema.json | 2026-06-02 |
 | `projjson-0.7.schema.json` | https://proj.org/schemas/v0.7/projjson.schema.json | 2026-06-02 |
 
 To refresh:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/opengeospatial/geoparquet/main/format-specs/schema.json \
-  -o scripts/schemas/geoparquet-2.0.0-dev.schema.json
+  -o scripts/schemas/geoparquet-2.0-dev.schema.json
 curl -fsSL https://proj.org/schemas/v0.7/projjson.schema.json \
   -o scripts/schemas/projjson-0.7.schema.json
 ```

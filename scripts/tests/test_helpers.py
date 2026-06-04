@@ -15,7 +15,7 @@ def test_make_geo_metadata_defaults():
 
 def test_metadata_bytes_is_deterministic():
     meta = {
-        "version": "2.0.0-dev",
+        "version": "2.0-dev",
         "primary_column": "geometry",
         "columns": {"geometry": {"encoding": "WKB", "geometry_types": ["Point"]}},
     }
