@@ -36,6 +36,7 @@ FILE_TO_MODULE = {
     "airports-global.parquet": "airports_global",
     "us-states.parquet": "us_states",
     "buildings-with-centroid.parquet": "buildings_with_centroid",
+    "flight-routes-great-circle.parquet": "flight_routes",
 }
 
 # Samples not yet produced, with the reason. Documented in samples/README.md by
@@ -46,11 +47,6 @@ DEFERRED_SAMPLES = [
         "LINZ NZ Building Outlines (CC-BY 4.0) requires a LINZ Data Service API "
         "key, which is not available in this environment. See plan Task 4.2.a "
         "(docs/superpowers/plans/2026-06-01-geoparquet-testing-implementation.md).",
-    ),
-    (
-        "flight-routes-great-circle.parquet",
-        "native-geography logical type not yet supported by the toolchain — see "
-        "docs/superpowers/plans/2026-06-01-geography-logical-type-deferred.md.",
     ),
 ]
 

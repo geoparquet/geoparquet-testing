@@ -70,6 +70,13 @@ def main() -> None:
         )
         print(f"  wrote data/encodings/{out.name}")
 
+    # Realistic native-geography sample (also sedonadb-tooled).
+    from gpqgen.paths import SAMPLES_DIR
+    from samples import flight_routes
+
+    out = flight_routes.generate(SAMPLES_DIR)
+    print(f"  wrote samples/{out.name}")
+
 
 if __name__ == "__main__":
     main()

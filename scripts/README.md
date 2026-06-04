@@ -40,8 +40,14 @@ separate environment:
 python3 -m venv .venv-geography
 .venv-geography/bin/pip install apache-sedona
 .venv-geography/bin/pip install sedonadb --pre --extra-index-url=https://pypi.fury.io/sedona-nightlies/
+.venv-geography/bin/pip install pyproj   # for the flight_routes great-circle sample
 .venv-geography/bin/python gen_geography.py
 ```
+
+`gen_geography.py` also generates the `samples/flight-routes-great-circle.parquet`
+realistic-tier sample (long-haul great-circle routes as native Geography), since it
+shares the sedonadb tooling. That sample additionally needs `pyproj` (for the
+great-circle interpolation), hence the extra `pip install pyproj` above.
 
 These files are committed **snapshots**: CI does not byte-diff them (sedonadb isn't
 installed in CI); the pytest suite validates them instead. Pinned tooling matters for

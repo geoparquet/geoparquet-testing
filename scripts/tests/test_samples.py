@@ -10,8 +10,6 @@ from gpqgen.paths import SAMPLES_DIR
 
 # Expected sample filenames. Generators below produce these; if a sample is
 # skipped (license, missing source), remove its entry here too.
-# NOTE: flight-routes-great-circle.parquet is deferred (native-geography logical
-# type not yet supported by the toolchain) — see docs/superpowers/plans/2026-06-01-geography-logical-type-deferred.md
 # NOTE: nz-building-outlines.parquet is deferred (needs a LINZ Data Service API
 # key) — see plan Task 4.2.a and the "Deferred samples" note in samples/README.md.
 EXPECTED = [
@@ -22,6 +20,7 @@ EXPECTED = [
     "buildings-with-centroid.parquet",
     "gps-trajectory-xyzm.parquet",
     "bathymetry-contours.parquet",
+    "flight-routes-great-circle.parquet",
 ]
 
 
