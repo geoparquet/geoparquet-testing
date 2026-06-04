@@ -10,7 +10,7 @@ Modeled after [`apache/parquet-testing`](https://github.com/apache/parquet-testi
 
 | Tier | Purpose | Files |
 |---|---|---|
-| [`data/`](data/) | Small, systematic conformance fixtures exercising each spec axis | 22 |
+| [`data/`](data/) | Small, systematic conformance fixtures exercising each spec axis | 28 |
 | [`samples/`](samples/) | Plausibly-real datasets flexing spec features at non-trivial scale | 7 |
 | [`bad_data/`](bad_data/) | Files that deliberately violate the spec, with a machine-readable [`manifest.json`](bad_data/manifest.json) | 22 |
 
@@ -22,9 +22,8 @@ The corpus targets GeoParquet 2.0-dev and every file in `data/` and `samples/` v
 against the [GeoParquet 2.0-dev JSON Schema](scripts/schemas/) (CI enforces this). A few fixtures
 are intentionally deferred:
 
-- **Native-geography logical-type files** (the `data/encodings/` geography variants and the
-  `flight-routes` sample) await toolchain support for emitting the Parquet native Geography
-  logical type.
+- **The `flight-routes` native-geography sample** awaits toolchain integration for emitting
+  the Parquet native Geography logical type at sample scale.
 - **`samples/nz-building-outlines`** requires a LINZ Data Service API key and is deferred.
 
 ## Consumption

@@ -6,7 +6,7 @@ behavior.
 
 | Subdirectory | Files | Axis exercised |
 |---|---|---|
-| [`encodings/`](encodings/) | 6 | Geometry-type (native-geometry; native-geography deferred) |
+| [`encodings/`](encodings/) | 12 | Geometry-type × {native-geometry, native-geography} |
 | [`crs/`](crs/) | 5 | CRS representation: default (no crs), full PROJJSON by OGC/EPSG id, projected, PROJJSON without id |
 | [`edges/`](edges/) | 2 | `edges: "planar"` vs `"spherical"` (antimeridian-crossing line) |
 | [`epoch/`](epoch/) | 2 | `epoch` with GDA2020 — visible plate-motion shift |
@@ -18,3 +18,8 @@ Every file in this tier is:
 - generated only with `pyarrow` + `geoarrow-pyarrow` (no geopandas, no shapely),
 - 3–10 rows,
 - byte-identical across regenerations (enforced by CI).
+
+Exception: the 6 `encodings/*-native-geography.parquet` files are generated with
+Apache sedonadb (the only tool that emits the Parquet native Geography logical type)
+and committed as snapshots — CI validates them via pytest but does not byte-diff them
+(see `scripts/README.md`, "Geography tier").

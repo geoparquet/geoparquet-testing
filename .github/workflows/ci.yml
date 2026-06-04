@@ -46,8 +46,12 @@ jobs:
 
       - name: Diff regenerated deterministic output against committed files
         run: |
+          # Exclude *-native-geography.parquet: those are Apache sedonadb-generated
+          # snapshots (sedonadb is a pre-release dep not installed in CI), so CI does
+          # not regenerate/byte-diff them — pytest validates them instead. bad_data has
+          # no such files, so the exclude is harmless there.
           for tier in data bad_data; do
-            diff -qr "$tier" "tmp_generated/$tier" \
+            diff -qr -x '*-native-geography.parquet' "$tier" "tmp_generated/$tier" \
               || { echo "::error::Generated $tier differs from committed files. Re-run the generators locally and commit."; exit 1; }
           done
 
