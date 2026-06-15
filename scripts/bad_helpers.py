@@ -26,7 +26,7 @@ def write_with_metadata_bytes(
     new_meta[b"geo"] = geo_bytes
     table = table.replace_schema_metadata(new_meta)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    pq.write_table(table, out_path, compression="snappy", row_group_size=1024)
+    pq.write_table(table, out_path, compression="zstd", compression_level=15, row_group_size=1024)
 
 
 def write_without_geo_metadata(table: pa.Table, out_path: Path) -> None:
@@ -35,7 +35,7 @@ def write_without_geo_metadata(table: pa.Table, out_path: Path) -> None:
     new_meta.pop(b"geo", None)
     table = table.replace_schema_metadata(new_meta)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    pq.write_table(table, out_path, compression="snappy", row_group_size=1024)
+    pq.write_table(table, out_path, compression="zstd", compression_level=15, row_group_size=1024)
 
 
 def truncate_first_wkb(table: pa.Table, drop_bytes: int = 8) -> pa.Table:

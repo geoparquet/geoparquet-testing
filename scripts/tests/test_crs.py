@@ -6,7 +6,7 @@ from pathlib import Path
 import pyarrow.parquet as pq
 import pytest
 
-from gpqgen.paths import DATA_DIR
+from gpqgen.paths import DATA_DIR, SAMPLES_DIR
 
 CRS_DIR = DATA_DIR / "crs"
 
@@ -63,3 +63,28 @@ def test_projjson_full_has_no_id():
     crs = geo["columns"]["geometry"]["crs"]
     assert "id" not in crs, "projjson-full must NOT include an `id` field — full inline PROJJSON only"
     assert "type" in crs
+
+
+def _all_corpus_parquets() -> list[Path]:
+    paths = list(DATA_DIR.rglob("*.parquet")) + list(SAMPLES_DIR.glob("*.parquet"))
+    return sorted(paths)
+
+
+@pytest.mark.parametrize("path", _all_corpus_parquets(), ids=lambda p: p.name)
+def test_geo_crs_is_projjson_or_absent(path: Path):
+    """Every geo `crs` must be inline PROJJSON (object with `type`) — never a bare
+    authority:code string. Codifies the GeoParquet 2.0 rule that the geo metadata
+    crs is PROJJSON-or-null only (the authority:code form lives on the Parquet
+    native logical type, not here)."""
+    meta = pq.ParquetFile(path).schema_arrow.metadata or {}
+    if b"geo" not in meta:
+        pytest.skip("no geo metadata")
+    geo = json.loads(meta[b"geo"])
+    for name, col in geo.get("columns", {}).items():
+        if "crs" not in col:
+            continue
+        crs = col["crs"]
+        if crs is None:
+            continue
+        assert isinstance(crs, dict), f"{path.name}:{name} crs must be PROJJSON object or null, got {type(crs).__name__}"
+        assert "type" in crs, f"{path.name}:{name} crs must be full PROJJSON (missing `type`)"

@@ -65,7 +65,7 @@ def main() -> None:
             str(out),
             geoparquet_version="none",
             sort_by="geometry",
-            compression="snappy",
+            compression="zstd",
             options={"created_by": CREATED_BY, "metadata::geo": geo_str},
         )
         print(f"  wrote data/encodings/{out.name}")

@@ -110,7 +110,7 @@ def generate(out_dir: Path) -> Path:
         str(out),
         geoparquet_version="none",
         sort_by="route_id",
-        compression="snappy",
+        compression="zstd",
         options={"created_by": CREATED_BY, "metadata::geo": geo_str},
     )
     return out

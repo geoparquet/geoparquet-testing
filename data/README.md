@@ -13,6 +13,7 @@ behavior.
 | [`zm/`](zm/) | 3 | XYZ, XYM, XYZM LineStrings |
 | [`multi_geometry/`](multi_geometry/) | 2 | Two geometry columns per row (footprint + centroid) |
 | [`orientation/`](orientation/) | 2 | Declared `counterclockwise` + undeclared (CW) |
+| [`compression/`](compression/) | 6 | One file per Parquet codec: none, snappy, gzip, brotli, lz4_raw, zstd |
 
 Every file in this tier is:
 - generated only with `pyarrow` + `geoarrow-pyarrow` (no geopandas, no shapely),
