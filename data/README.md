@@ -24,3 +24,8 @@ Exception: the 6 `encodings/*-native-geography.parquet` files are generated with
 Apache sedonadb (the only tool that emits the Parquet native Geography logical type)
 and committed as snapshots — CI validates them via pytest but does not byte-diff them
 (see `scripts/README.md`, "Geography tier").
+
+Exception: the `compression/*.parquet` files cover the Parquet codecs, and some codecs
+(notably gzip/zlib) emit platform- and library-build-dependent bytes, so they are not
+byte-reproducible across machines. CI does not byte-diff them; pytest asserts each
+file's codec instead.

@@ -51,8 +51,12 @@ jobs:
           # snapshots (sedonadb is a pre-release dep not installed in CI), so CI does
           # not regenerate/byte-diff them — pytest validates them instead. bad_data has
           # no such files, so the exclude is harmless there.
+          # Exclude compression-*.parquet: the data/compression/ tier exists to cover
+          # Parquet codecs, and some codecs (notably gzip/zlib) emit platform- and
+          # library-build-dependent bytes, so they are not byte-reproducible across
+          # machines. pytest asserts the codec of each instead.
           for tier in data bad_data; do
-            diff -qr -x '*-native-geography.parquet' "$tier" "tmp_generated/$tier" \
+            diff -qr -x '*-native-geography.parquet' -x 'compression-*.parquet' "$tier" "tmp_generated/$tier" \
               || { echo "::error::Generated $tier differs from committed files. Re-run the generators locally and commit."; exit 1; }
           done
 
