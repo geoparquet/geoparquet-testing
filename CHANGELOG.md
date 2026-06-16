@@ -16,6 +16,7 @@ All notable changes to the geoparquet-testing corpus are recorded here.
 
 ### Changed
 - Default corpus compression is now **zstd level 15** (was snappy), matching the GeoParquet `distributing-geoparquet.md` recommendation. All deterministic `data/` and `bad_data/` files were regenerated.
+- `samples/bathymetry-contours.parquet` now uses **real** Natural Earth 1:10m bathymetry (depth contours over the Mariana Trench, 0 to -10000 m) instead of synthetic sine-wave lines.
 
 ### Deferred
 - Native-logical-type CRS variants from GeoParquet 2.0 (`srid:0` in the Parquet metadata + `null` geo `crs`; PROJJSON geo `crs` + `authority:code` in the Parquet metadata) — blocked on tooling that can write a custom CRS string into the Parquet native GEOMETRY/GEOGRAPHY logical type.

@@ -9,7 +9,7 @@ Per-file budget: ≤ 5 MB. CI enforces.
 | `airports-global.parquet` | 34 | _see header of `scripts/samples/airports_global.py`_ |
 | `australia-gnss-stations-2024.parquet` | 4 | _see header of `scripts/samples/australia_gnss.py`_ |
 | `australia-gnss-stations.parquet` | 4 | _see header of `scripts/samples/australia_gnss.py`_ |
-| `bathymetry-contours.parquet` | 13 | _see header of `scripts/samples/bathymetry_contours.py`_ |
+| `bathymetry-contours.parquet` | 132 | _see header of `scripts/samples/bathymetry_contours.py`_ |
 | `buildings-3d.parquet` | 261 | _see header of `scripts/samples/buildings_3d.py`_ |
 | `buildings-with-centroid.parquet` | 17 | _see header of `scripts/samples/buildings_with_centroid.py`_ |
 | `flight-routes-great-circle.parquet` | 18 | _see header of `scripts/samples/flight_routes.py`_ |

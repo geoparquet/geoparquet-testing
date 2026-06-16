@@ -1,26 +1,37 @@
-"""samples/bathymetry-contours.parquet — synthetic offshore depth contours.
+"""samples/bathymetry-contours.parquet — real ocean depth contours (Natural Earth).
 
-Source:    SYNTHETIC. Deterministic parametric contour lines; not real soundings.
-License:   CC0 / public domain (machine-generated).
-Encoding:  WKB (native geometry, planar edges).
+Source:    Natural Earth 1:10m physical "Bathymetry" (ne_10m_bathymetry_all).
+           https://www.naturalearthdata.com/downloads/10m-physical-vectors/
+           CDN: https://naciscdn.org/naturalearth/10m/physical/ne_10m_bathymetry_all.zip
+           Fetched 2026-06-16.
+License:   Public domain (Natural Earth — no permission needed, no attribution required).
+Encoding:  WKB (planar edges).
 CRS:       OGC:CRS84 (lon/lat, WGS 84).
-Showcases: XYZ MultiLineString geometry where Z carries depth (negative metres
-           below sea level). ~50 rows, one constant-depth contour per row.
-           geometry_types = ["MultiLineString Z"].
+Showcases: XYZ MultiLineString geometry where Z carries depth (negative metres below
+           sea level). Subset is a window over the Mariana Trench / Philippine Sea
+           (lon 140-150, lat 5-22) — real generalized seafloor contours spanning the
+           full Natural Earth depth range, 0 down to -10000 m. geometry_types =
+           ["MultiLineString Z"].
 
-Contours span a small offshore box east of Sydney (lon 151.3-152.0,
-lat -34.0 to -33.5). Each contour is a deterministic wavy line whose vertical
-amplitude scales with depth, so deeper contours wander more. Float formatting
-is fixed-width so output is byte-stable.
+Natural Earth ships bathymetry as polygon depth bands (one shapefile per depth, 0
+to 10000 m). Each band's polygon boundaries become a contour MultiLineString, with
+every vertex's Z set to that band's depth (negative metres). One row per source
+feature; depth carried both as the `depth_m` attribute and in the geometry Z.
+
+Columns: depth_m (int, metres below sea level, negative), featurecla, scalerank,
+geometry (WKB MultiLineString Z). Rows sorted by (depth_m, geometry) for byte-stable
+output.
 """
 
 from __future__ import annotations
 
-import math
+import io
+import re
 import sys
+import tempfile
+import zipfile
 from pathlib import Path
 
-import geoarrow.pyarrow as ga
 import pyarrow as pa
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -29,32 +40,50 @@ from gpqgen.crs import CRS84
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.write import write_parquet_deterministic
 
-N_CONTOURS = 50
-N_VERTICES = 24            # vertices per contour line
-LON_MIN, LON_MAX = 151.3, 152.0
-LAT_BASE = -33.5           # northern edge; contours drift south with depth
-
-
-def _contour_wkt(index: int, depth: int) -> str:
-    # Deeper (more negative) contours sit further south and wave more.
-    lat_center = LAT_BASE - 0.5 * (index / max(N_CONTOURS - 1, 1))
-    amp = 0.01 + 0.0008 * index
-    pts = []
-    for j in range(N_VERTICES):
-        frac = j / (N_VERTICES - 1)
-        lon = LON_MIN + (LON_MAX - LON_MIN) * frac
-        lat = lat_center + amp * math.sin(frac * math.pi * 3 + index * 0.3)
-        pts.append(f"{lon:.6f} {lat:.6f} {float(depth):.2f}")
-    return "MULTILINESTRING Z ((" + ", ".join(pts) + "))"
+ZIP_URL = "https://naciscdn.org/naturalearth/10m/physical/ne_10m_bathymetry_all.zip"
+# Window over the Mariana Trench / Philippine Sea, in lon/lat (WGS 84).
+BBOX = (140.0, 5.0, 150.0, 22.0)
+OUT_NAME = "bathymetry-contours.parquet"
 
 
 def generate(out_dir: Path) -> Path:
-    depths = [-10 * (i + 1) for i in range(N_CONTOURS)]  # -10, -20, ... -500
-    wkts = [_contour_wkt(i, d) for i, d in enumerate(depths)]
+    import geopandas as gpd
+    import requests
+    import shapely
+    from shapely.geometry import MultiLineString, box
+
+    resp = requests.get(ZIP_URL, timeout=120)
+    resp.raise_for_status()
+    region = box(*BBOX)
+
+    depth_m, featurecla, scalerank, geometry = [], [], [], []
+    with zipfile.ZipFile(io.BytesIO(resp.content)) as zf:
+        shp_names = sorted(n for n in zf.namelist() if n.endswith(".shp"))
+        with tempfile.TemporaryDirectory() as tmp:
+            zf.extractall(tmp)
+            for shp in shp_names:
+                depth = int(re.search(r"_(\d+)\.shp$", shp).group(1))
+                gdf = gpd.clip(gpd.read_file(Path(tmp) / Path(shp).name), region)
+                for _, row in gdf.iterrows():
+                    boundary = row.geometry.boundary
+                    if boundary.is_empty:
+                        continue
+                    if boundary.geom_type == "LineString":
+                        boundary = MultiLineString([boundary])
+                    lifted = shapely.force_3d(boundary, z=-float(depth))
+                    depth_m.append(-depth)
+                    featurecla.append(row.get("featurecla"))
+                    scalerank.append(int(row["scalerank"]) if row.get("scalerank") is not None else None)
+                    geometry.append(shapely.to_wkb(lifted, output_dimension=3, flavor="iso"))
+
+    # Stable order independent of file/clip iteration order.
+    order = sorted(range(len(geometry)), key=lambda i: (depth_m[i], geometry[i]))
     table = pa.table(
         {
-            "depth_m": pa.array(depths, type=pa.int64()),
-            "geometry": ga.as_wkb(wkts),
+            "depth_m": pa.array([depth_m[i] for i in order], pa.int64()),
+            "featurecla": pa.array([featurecla[i] for i in order], pa.string()),
+            "scalerank": pa.array([scalerank[i] for i in order], pa.int32()),
+            "geometry": pa.array([geometry[i] for i in order], pa.binary()),
         }
     )
     geo = make_geo_metadata(
@@ -67,6 +96,10 @@ def generate(out_dir: Path) -> Path:
             }
         }
     )
-    out = out_dir / "bathymetry-contours.parquet"
+    out = out_dir / OUT_NAME
     write_parquet_deterministic(table, out, geo)
     return out
+
+
+if __name__ == "__main__":
+    print(generate(Path(__file__).resolve().parents[2] / "samples"))
