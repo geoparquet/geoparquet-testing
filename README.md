@@ -11,7 +11,7 @@ Modeled after [`apache/parquet-testing`](https://github.com/apache/parquet-testi
 | Tier | Purpose | Files |
 |---|---|---|
 | [`data/`](data/) | Small, systematic conformance fixtures exercising each spec axis | 34 |
-| [`samples/`](samples/) | Plausibly-real datasets flexing spec features at non-trivial scale | 8 |
+| [`samples/`](samples/) | Plausibly-real datasets flexing spec features at non-trivial scale | 9 |
 | [`bad_data/`](bad_data/) | Files that deliberately violate the spec, with a machine-readable [`manifest.json`](bad_data/manifest.json) | 22 |
 
 Each tier directory has its own README indexing every file and what it tests.
@@ -22,7 +22,6 @@ The corpus targets GeoParquet 2.0-dev and every file in `data/` and `samples/` v
 against the [GeoParquet 2.0-dev JSON Schema](scripts/schemas/) (CI enforces this). A few fixtures
 are intentionally deferred:
 
-- **`samples/nz-building-outlines`** requires a LINZ Data Service API key and is deferred.
 - **Native-logical-type CRS variants** (`srid:0` in the Parquet metadata + `null` geo `crs`;
   PROJJSON geo `crs` + `authority:code` in the Parquet metadata) are deferred until tooling can
   write a custom CRS string into the Parquet native GEOMETRY/GEOGRAPHY logical type.

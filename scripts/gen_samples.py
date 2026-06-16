@@ -25,6 +25,7 @@ SAMPLES = [
     "buildings_with_centroid",
     "gps_trajectory",
     "bathymetry_contours",
+    "buildings_3d",
 ]
 
 # Output parquet filename -> producing module under scripts/samples/.
@@ -37,18 +38,12 @@ FILE_TO_MODULE = {
     "us-states.parquet": "us_states",
     "buildings-with-centroid.parquet": "buildings_with_centroid",
     "flight-routes-great-circle.parquet": "flight_routes",
+    "buildings-3d.parquet": "buildings_3d",
 }
 
 # Samples not yet produced, with the reason. Documented in samples/README.md by
 # _write_readme() so the note survives README regeneration.
-DEFERRED_SAMPLES = [
-    (
-        "nz-building-outlines.parquet",
-        "LINZ NZ Building Outlines (CC-BY 4.0) requires a LINZ Data Service API "
-        "key, which is not available in this environment. See plan Task 4.2.a "
-        "(docs/superpowers/plans/2026-06-01-geoparquet-testing-implementation.md).",
-    ),
-]
+DEFERRED_SAMPLES: list[tuple[str, str]] = []
 
 
 def main() -> int:

@@ -10,8 +10,6 @@ from gpqgen.paths import SAMPLES_DIR
 
 # Expected sample filenames. Generators below produce these; if a sample is
 # skipped (license, missing source), remove its entry here too.
-# NOTE: nz-building-outlines.parquet is deferred (needs a LINZ Data Service API
-# key) — see plan Task 4.2.a and the "Deferred samples" note in samples/README.md.
 EXPECTED = [
     "us-states.parquet",
     "airports-global.parquet",
@@ -21,6 +19,7 @@ EXPECTED = [
     "gps-trajectory-xyzm.parquet",
     "bathymetry-contours.parquet",
     "flight-routes-great-circle.parquet",
+    "buildings-3d.parquet",
 ]
 
 

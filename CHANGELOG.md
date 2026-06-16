@@ -12,12 +12,12 @@ All notable changes to the geoparquet-testing corpus are recorded here.
 - `data/encodings/` native-geography variants (6 files, one per geometry type) carrying the Parquet native Geography logical type with spherical edges — generated via Apache sedonadb (the only tool in our stack that emits that logical type).
 - `samples/flight-routes-great-circle.parquet` — long-haul origin-destination flight routes as native Geography (great-circle paths via `pyproj.Geod`, spherical edges, OGC:CRS84), generated via Apache sedonadb alongside the encodings geography variants.
 - `data/compression/` — six files holding an identical Point table, one per Parquet codec (none, snappy, gzip, brotli, lz4_raw, zstd), exercising reader codec support.
+- `samples/buildings-3d.parquet` — 3D building footprints over central Delft from 3DBAG (TU Delft), POLYGON Z lifted to NAP ground elevation, in the EPSG:7415 compound CRS (RD New + NAP height).
 
 ### Changed
 - Default corpus compression is now **zstd level 15** (was snappy), matching the GeoParquet `distributing-geoparquet.md` recommendation. All deterministic `data/` and `bad_data/` files were regenerated.
 
 ### Deferred
-- `samples/nz-building-outlines` — requires a LINZ Data Service API key.
 - Native-logical-type CRS variants from GeoParquet 2.0 (`srid:0` in the Parquet metadata + `null` geo `crs`; PROJJSON geo `crs` + `authority:code` in the Parquet metadata) — blocked on tooling that can write a custom CRS string into the Parquet native GEOMETRY/GEOGRAPHY logical type.
 
 ### Notes
