@@ -15,8 +15,10 @@ Showcases: XYZ MultiLineString geometry where Z carries depth (negative metres b
 
 Natural Earth ships bathymetry as polygon depth bands (one shapefile per depth, 0
 to 10000 m). Each band's polygon boundaries become a contour MultiLineString, with
-every vertex's Z set to that band's depth (negative metres). One row per source
-feature; depth carried both as the `depth_m` attribute and in the geometry Z.
+every vertex's Z set to that band's depth (negative metres). The contour *lines* are
+clipped to the region window (clipping the lines, not the polygons, avoids drawing a
+rectangular frame along the bbox edges). One row per source feature; depth carried
+both as the `depth_m` attribute and in the geometry Z.
 
 Columns: depth_m (int, metres below sea level, negative), featurecla, scalerank,
 geometry (WKB MultiLineString Z). Rows sorted by (depth_m, geometry) for byte-stable
@@ -56,6 +58,18 @@ def generate(out_dir: Path) -> Path:
     resp.raise_for_status()
     region = box(*BBOX)
 
+    def to_multilinestring(geom):
+        """Collect all line components of geom into a MultiLineString (or None)."""
+        if geom is None or geom.is_empty:
+            return None
+        if geom.geom_type == "LineString":
+            return MultiLineString([geom])
+        if geom.geom_type == "MultiLineString":
+            return geom
+        # GeometryCollection (e.g. a tangent point alongside lines): keep the lines.
+        parts = [g for g in getattr(geom, "geoms", []) if g.geom_type == "LineString"]
+        return MultiLineString(parts) if parts else None
+
     depth_m, featurecla, scalerank, geometry = [], [], [], []
     with zipfile.ZipFile(io.BytesIO(resp.content)) as zf:
         shp_names = sorted(n for n in zf.namelist() if n.endswith(".shp"))
@@ -63,14 +77,19 @@ def generate(out_dir: Path) -> Path:
             zf.extractall(tmp)
             for shp in shp_names:
                 depth = int(re.search(r"_(\d+)\.shp$", shp).group(1))
-                gdf = gpd.clip(gpd.read_file(Path(tmp) / Path(shp).name), region)
+                gdf = gpd.read_file(Path(tmp) / Path(shp).name)
+                gdf = gdf[gdf.intersects(region)].copy()
+                if gdf.empty:
+                    continue
+                # Lines first, THEN clip the lines — clipping polygons would add a
+                # rectangular frame along the bbox; clipping lines just trims them.
+                gdf["geometry"] = gdf.geometry.boundary
+                gdf = gpd.clip(gdf, region)
                 for _, row in gdf.iterrows():
-                    boundary = row.geometry.boundary
-                    if boundary.is_empty:
+                    mls = to_multilinestring(row.geometry)
+                    if mls is None:
                         continue
-                    if boundary.geom_type == "LineString":
-                        boundary = MultiLineString([boundary])
-                    lifted = shapely.force_3d(boundary, z=-float(depth))
+                    lifted = shapely.force_3d(mls, z=-float(depth))
                     depth_m.append(-depth)
                     featurecla.append(row.get("featurecla"))
                     scalerank.append(int(row["scalerank"]) if row.get("scalerank") is not None else None)
