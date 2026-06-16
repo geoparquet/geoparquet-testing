@@ -40,6 +40,7 @@ jobs:
           uv run python gen_zm.py
           uv run python gen_multi_geometry.py
           uv run python gen_orientation.py
+          uv run python gen_compression.py
           uv run python gen_bad_data.py
           # data/README.md is hand-written (Task 2.8), not generated — copy it so the diff matches.
           cp ../data/README.md "$GPQGEN_OUTPUT_ROOT"/data/README.md
