@@ -110,7 +110,7 @@ def generate(out_dir: Path) -> Path:
         str(out),
         geoparquet_version="none",
         sort_by="route_id",
-        compression="zstd",
+        compression="zstd(15)",  # corpus default level (see gpqgen.write)
         options={"created_by": CREATED_BY, "metadata::geo": geo_str},
     )
     return out

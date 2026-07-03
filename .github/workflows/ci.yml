@@ -48,8 +48,8 @@ jobs:
       - name: Diff regenerated deterministic output against committed files
         run: |
           # Exclude *-native-geography.parquet: those are Apache sedonadb-generated
-          # snapshots (sedonadb is a pre-release dep not installed in CI), so CI does
-          # not regenerate/byte-diff them — pytest validates them instead. bad_data has
+          # snapshots (sedonadb is a heavy generation-only dep not installed in CI), so
+          # CI does not regenerate/byte-diff them — pytest validates them instead. bad_data has
           # no such files, so the exclude is harmless there.
           # Exclude compression-*.parquet: the data/compression/ tier exists to cover
           # Parquet codecs, and some codecs (notably gzip/zlib) emit platform- and
