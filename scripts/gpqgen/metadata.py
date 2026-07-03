@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-GEOPARQUET_VERSION = "2.0-dev"
+GEOPARQUET_VERSION = "2.0.0"
 
 
 def make_geo_metadata(

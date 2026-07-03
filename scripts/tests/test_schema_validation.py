@@ -1,5 +1,5 @@
 """For every .parquet under data/ and samples/, validate the `geo` metadata
-against the GeoParquet 2.0-dev JSON Schema (with the PROJJSON crs $ref resolved
+against the GeoParquet 2.0.0 JSON Schema (with the PROJJSON crs $ref resolved
 from a vendored local copy).
 
 All `crs` values in the corpus are full PROJJSON v0.7 objects (with `name` and
@@ -18,7 +18,7 @@ from referencing import Registry, Resource
 from gpqgen.paths import DATA_DIR, SAMPLES_DIR
 
 SCHEMA_DIR = Path(__file__).resolve().parent.parent / "schemas"
-GEO_SCHEMA_PATH = SCHEMA_DIR / "geoparquet-2.0-dev.schema.json"
+GEO_SCHEMA_PATH = SCHEMA_DIR / "geoparquet-2.0.0.schema.json"
 PROJJSON_SCHEMA_PATH = SCHEMA_DIR / "projjson-0.7.schema.json"
 
 

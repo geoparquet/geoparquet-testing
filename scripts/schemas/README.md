@@ -4,14 +4,14 @@ Vendored copies of JSON Schemas used by the self-test suite.
 
 | File | Source | Pinned at |
 |---|---|---|
-| `geoparquet-2.0-dev.schema.json` | https://github.com/opengeospatial/geoparquet/blob/main/format-specs/schema.json | 2026-06-02 |
+| `geoparquet-2.0.0.schema.json` | https://github.com/opengeospatial/geoparquet/blob/main/format-specs/schema.json | 2026-07-03 |
 | `projjson-0.7.schema.json` | https://proj.org/schemas/v0.7/projjson.schema.json | 2026-06-02 |
 
 To refresh:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/opengeospatial/geoparquet/main/format-specs/schema.json \
-  -o scripts/schemas/geoparquet-2.0-dev.schema.json
+  -o scripts/schemas/geoparquet-2.0.0.schema.json
 curl -fsSL https://proj.org/schemas/v0.7/projjson.schema.json \
   -o scripts/schemas/projjson-0.7.schema.json
 ```
@@ -38,10 +38,15 @@ the vendored GeoParquet schema. Current status: **all files pass**.
 - **`geometry_types` Z/M/ZM suffixes: OK.** The schema's `items` pattern is
   `^(GeometryCollection|(Multi)?(Point|LineString|Polygon))( Z| M| ZM)?$`, so
   `"LineString ZM"`, `"MultiLineString Z"`, etc. validate fine.
-- **Version / epoch: aligned.** The corpus now declares `version: "2.0-dev"`
+- **Version / epoch: aligned.** The corpus declares `version: "2.0.0"`
   (matching the schema `const`) and uses the `epoch` key (matching the schema's
   numeric `epoch` field). The earlier `2.0.0-dev` / `coordinate_epoch`
   mismatches are resolved and no longer cause failures.
+- **`edges` merged the old `algorithm` field.** GeoParquet 2.0.0 folds the
+  geodesic algorithms (`vincenty`, `thomas`, `andoyer`, `karney`) into the
+  `edges` enum alongside `planar`/`spherical`; the separate `algorithm` property
+  from the 2.0-dev drafts was removed. The corpus only uses `planar` and
+  `spherical`, so no data changed.
 - **Encoding:** the schema allows `encoding` `const: "WKB"`; the corpus uses WKB
   exclusively, so there is no encoding mismatch today. If native/GeoArrow
   encodings are added later, this schema would reject them.

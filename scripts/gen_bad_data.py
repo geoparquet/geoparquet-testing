@@ -543,14 +543,14 @@ def register_json_validity_violations() -> None:
     def writer_invalid_json(out: Path) -> None:
         table = make_simple_point_table(["POINT (0 0)"])
         # Trailing-comma JSON is invalid per RFC 8259.
-        bad = b'{"version": "2.0.0-dev", "primary_column": "geometry", "columns": {"geometry": {"encoding": "WKB",}}}'
+        bad = b'{"version": "2.0.0", "primary_column": "geometry", "columns": {"geometry": {"encoding": "WKB",}}}'
         write_with_metadata_bytes(table, out, bad)
 
     def writer_invalid_utf8(out: Path) -> None:
         table = make_simple_point_table(["POINT (0 0)"])
         # 0xFF is never a valid UTF-8 byte. Wrap inside otherwise-plausible bytes
         # so the file structure is still valid Parquet.
-        bad = b'{"version": "2.0.0-dev", "n\xff": "x"}'
+        bad = b'{"version": "2.0.0", "n\xff": "x"}'
         write_with_metadata_bytes(table, out, bad)
 
     register(BadFile(

@@ -3,7 +3,7 @@
 Official test corpus for the [GeoParquet](https://github.com/opengeospatial/geoparquet) format.
 Modeled after [`apache/parquet-testing`](https://github.com/apache/parquet-testing).
 
-**Targets:** GeoParquet 2.0 (in development — `version: "2.0-dev"` in `geo` metadata).
+**Targets:** GeoParquet 2.0.0 (`version: "2.0.0"` in `geo` metadata).
 **Corpus version:** see [`CHANGELOG.md`](CHANGELOG.md) and [releases](https://github.com/geoparquet/geoparquet-testing/releases).
 
 ## Three tiers
@@ -18,8 +18,8 @@ Each tier directory has its own README indexing every file and what it tests.
 
 ## Status
 
-The corpus targets GeoParquet 2.0-dev and every file in `data/` and `samples/` validates
-against the [GeoParquet 2.0-dev JSON Schema](scripts/schemas/) (CI enforces this). A few fixtures
+The corpus targets GeoParquet 2.0.0 and every file in `data/` and `samples/` validates
+against the [GeoParquet 2.0.0 JSON Schema](scripts/schemas/) (CI enforces this). A few fixtures
 are intentionally deferred:
 
 - **Native-logical-type CRS variants** (`srid:0` in the Parquet metadata + `null` geo `crs`;
