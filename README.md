@@ -10,7 +10,7 @@ Modeled after [`apache/parquet-testing`](https://github.com/apache/parquet-testi
 
 | Tier | Purpose | Files |
 |---|---|---|
-| [`data/`](data/) | Small, systematic conformance fixtures exercising each spec axis | 34 |
+| [`data/`](data/) | Small, systematic conformance fixtures exercising each spec axis | 42 |
 | [`samples/`](samples/) | Plausibly-real datasets flexing spec features at non-trivial scale | 9 |
 | [`bad_data/`](bad_data/) | Files that deliberately violate the spec, with a machine-readable [`manifest.json`](bad_data/manifest.json) | 22 |
 
@@ -19,12 +19,17 @@ Each tier directory has its own README indexing every file and what it tests.
 ## Status
 
 The corpus targets GeoParquet 2.0.0 and every file in `data/` and `samples/` validates
-against the [GeoParquet 2.0.0 JSON Schema](scripts/schemas/) (CI enforces this). A few fixtures
-are intentionally deferred:
+against the [GeoParquet 2.0.0 JSON Schema](scripts/schemas/) (CI enforces this). Every
+geometry column uses the native Parquet `GEOMETRY`/`GEOGRAPHY` logical type, and every
+column whose CRS is not OGC:CRS84 carries that CRS on the native logical type (stamped
+as inline PROJJSON via sedonadb — see `scripts/gen_native_crs.py`) so it agrees with the
+`geo` metadata, as the spec requires.
 
-- **Native-logical-type CRS variants** (`srid:0` in the Parquet metadata + `null` geo `crs`;
-  PROJJSON geo `crs` + `authority:code` in the Parquet metadata) are deferred until tooling can
-  write a custom CRS string into the Parquet native GEOMETRY/GEOGRAPHY logical type.
+Two niche CRS-representation variants remain intentionally deferred (tooling limits):
+
+- `srid:0` in the Parquet metadata + `null` geo `crs` (an unknown CRS), and
+- full PROJJSON in the geo `crs` + the compact `authority:code` string in the Parquet
+  native metadata (our tooling only writes inline PROJJSON onto the native type).
 
 ## Consumption
 

@@ -37,6 +37,8 @@ jobs:
           uv run python gen_crs.py
           uv run python gen_edges.py
           uv run python gen_epoch.py
+          uv run python gen_geometry_types.py
+          uv run python gen_bbox.py
           uv run python gen_zm.py
           uv run python gen_multi_geometry.py
           uv run python gen_orientation.py
@@ -51,12 +53,20 @@ jobs:
           # snapshots (sedonadb is a heavy generation-only dep not installed in CI), so
           # CI does not regenerate/byte-diff them — pytest validates them instead. bad_data has
           # no such files, so the exclude is harmless there.
+          # Exclude the non-CRS84 files (crs-epsg-3857, epoch-*, two-geom-columns-different-crs):
+          # their real native-logical-type CRS is stamped by sedonadb (gen_native_crs.py, not
+          # run in CI); the pyarrow generators only emit the CRS84-default base, so byte-diffing
+          # would spuriously fail. pytest validates them instead.
           # Exclude compression-*.parquet: the data/compression/ tier exists to cover
           # Parquet codecs, and some codecs (notably gzip/zlib) emit platform- and
           # library-build-dependent bytes, so they are not byte-reproducible across
           # machines. pytest asserts the codec of each instead.
           for tier in data bad_data; do
-            diff -qr -x '*-native-geography.parquet' -x 'compression-*.parquet' "$tier" "tmp_generated/$tier" \
+            diff -qr \
+              -x '*-native-geography.parquet' \
+              -x 'crs-epsg-3857.parquet' -x 'epoch-*.parquet' -x 'two-geom-columns-different-crs.parquet' \
+              -x 'compression-*.parquet' \
+              "$tier" "tmp_generated/$tier" \
               || { echo "::error::Generated $tier differs from committed files. Re-run the generators locally and commit."; exit 1; }
           done
 

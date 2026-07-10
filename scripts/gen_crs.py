@@ -60,12 +60,19 @@ GeoParquet schema.
 | `crs-projjson-full.parquet` | Full inline PROJJSON for WGS 84, WITHOUT `id` field |
 
 In GeoParquet 2.0 the geo-metadata `crs` field is always full inline PROJJSON (or
-`null`); the compact `authority:code` form lives only on the Parquet native
-GEOMETRY/GEOGRAPHY logical type. Two further variants from that split —
-`srid:0` (Parquet) + `null` (geo) for an unknown CRS, and PROJJSON (geo) +
-`authority:code` (Parquet) — are **deferred**: writing a custom CRS string into the
-Parquet native logical type isn't yet supported by our tooling (same blocker as the
-geography tier; see `scripts/README.md`).
+`null`), and the CRS also travels on the Parquet native GEOMETRY/GEOGRAPHY logical
+type, where it is the source of truth. For the non-CRS84 file here
+(`crs-epsg-3857.parquet`) that native CRS is stamped by sedonadb as inline PROJJSON
+(`gen_native_crs.py`), because our pyarrow toolchain can only write the CRS84
+default onto the native type. The CRS84/EPSG:4326 files need no such stamp: an
+empty native CRS already means OGC:CRS84, and the spec treats EPSG:4326 as
+equivalent.
+
+Two niche representation variants from the Parquet `crs`-property split are still
+**deferred**: `srid:0` (Parquet) + `null` (geo) for an unknown CRS (sedonadb
+refuses to write a null CRS), and PROJJSON (geo) + the compact `authority:code`
+(Parquet) native form (sedonadb only emits inline PROJJSON). See
+`scripts/README.md`.
 """
     (OUT_DIR / "README.md").write_text(text)
 
