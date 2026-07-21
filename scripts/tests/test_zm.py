@@ -31,3 +31,19 @@ def test_xym_file_has_m_dimension():
 def test_xyzm_file_has_zm_dimensions():
     code = _first_wkb_type(ZM_DIR / "linestring-xyzm-native-geometry.parquet")
     assert code == 3002, f"expected LineString XYZM (3002), got {code}"
+
+
+def _declared_geometry_types(path) -> list[str]:
+    meta = pq.ParquetFile(path).metadata.metadata
+    return json.loads(meta[b"geo"])["columns"]["geometry"]["geometry_types"]
+
+
+def test_declared_geometry_types_carry_dimension_suffix():
+    """Spec: 'a \" Z\" suffix gets added' and the field is 'strictly correct'."""
+    expected = {
+        "linestring-xyz-native-geometry.parquet": ["LineString Z"],
+        "linestring-xym-native-geometry.parquet": ["LineString M"],
+        "linestring-xyzm-native-geometry.parquet": ["LineString ZM"],
+    }
+    for fname, types in expected.items():
+        assert _declared_geometry_types(ZM_DIR / fname) == types, fname
