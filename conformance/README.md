@@ -141,7 +141,7 @@ Four layers, all but the last in CI (`.github/workflows/conformance.yml`):
 
 ## Building
 
-`cargo build --release` with a Rust 1.98 toolchain, or with Docker:
+`cargo build --release` (the toolchain is pinned to 1.98.0 by `rust-toolchain.toml`; CI uses the same version), or with Docker:
 
 ```
 docker run --rm -v "$PWD":/work -w /work rust:1-slim-bookworm cargo build --release

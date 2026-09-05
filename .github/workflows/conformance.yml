@@ -13,7 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: dtolnay/rust-toolchain@stable
+      # Pinned: conformance/rust-toolchain.toml names the same version; bump both together.
+      - uses: dtolnay/rust-toolchain@1.98.0
         with:
           components: clippy, rustfmt
 
