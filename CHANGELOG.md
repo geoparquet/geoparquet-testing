@@ -5,6 +5,10 @@ All notable changes to the geoparquet-testing corpus are recorded here.
 ## [Unreleased]
 
 ### Added
+- `data/bbox/`: 6-element (XYZ) and 8-element (XYZM) `bbox` positives, and an antimeridian-crossing `bbox` (`xmin > xmax`, RFC 7946 §5.2) — validators must accept all three.
+- `data/orientation/`: positives for a polygon with a (clockwise) hole, a MultiPolygon, and a polygon inside a GeometryCollection, all declaring `counterclockwise`.
+- `bad_data/`: `orientation-ccw-declared-hole-ccw`, `orientation-ccw-declared-multipolygon-part-cw` (orientation applies to holes and to every part), `geometry-types-duplicate-entries` (schema `uniqueItems`), `geometry-column-not-in-columns` (a native GEOMETRY column absent from `columns`; new `expected_failure` `geometry_column_undeclared`).
+- `expected_failure` vocabulary: `primary_column_mismatch` (for `primary-column-not-in-columns`, which JSON Schema cannot express and was mislabelled `schema_validation_error`) and `geometry_column_undeclared`.
 - Initial three-tier corpus targeting GeoParquet 2.0.0: `data/` (conformance), `samples/` (realistic), `bad_data/` (negative).
 - `bad_data/manifest.json` as a machine-readable contract for downstream tools.
 - Self-test suite: per-tier invariants, cross-cutting JSON Schema validation (with vendored GeoParquet 2.0.0 + PROJJSON schemas), and README index hygiene.
