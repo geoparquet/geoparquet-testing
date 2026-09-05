@@ -36,3 +36,19 @@ jobs:
       - name: Run the OGC abstract tests over the corpus
         working-directory: conformance
         run: ./target/release/geoparquet-conf corpus ..
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Generate the fixture sets
+        working-directory: scripts
+        run: |
+          uv python install 3.12
+          uv sync
+          uv run python ../conformance/fixtures/generate.py
+
+      - name: Verify fixture verdicts against the manifest
+        working-directory: conformance
+        run: ./target/release/geoparquet-conf verify fixtures/out --manifest fixtures/expected.json

@@ -47,7 +47,7 @@ this corpus at `main` 6f7ede1 (48 valid + 26 defective files), whole run 0.03 s 
 * bad_data/: 24 of 24 files with an OGC requirement are failed by the mapped test; the remaining
   two (`edges_mismatch`, `epoch_unsupported`) have no OGC requirement, as expected.
 
-22 extra adversarial fixtures (`fixtures/make_fixtures.py`, run from `scripts/` with `uv run python ../conformance/fixtures/make_fixtures.py`: 6/8-element and antimeridian bbox
+33 adversarial fixtures of the author's (`fixtures/make_fixtures.py`: 6/8-element and antimeridian bbox
 violations, 11 covering positives/negatives incl. nullness mismatch and nested column, 7 Parquet
 `crs` forms: `EPSG:3857`, inline PROJJSON, `srid:0`, `projjson:<key>`, mismatches): all behave as
 intended.
@@ -92,6 +92,18 @@ bounding-box column failing only `bbox-paths`, `encoding` missing or non-string 
 data test, tool errors distinguished from conformance failures (exit 2), `--class` validated. Unit
 tests cover the decoder and the metric (`cargo test`).
 
+## Test suite
+
+Four layers, all but the last in CI (`.github/workflows/conformance.yml`):
+
+1. `cargo test`: unit tests of the WKB decoder and the spatial-order metric.
+2. `geoparquet-conf corpus ..`: this repository's `data/` must pass Core and `bad_data/` must fail
+   the test mapped from its `expected_failure`.
+3. `geoparquet-conf verify fixtures/out`: 192 generated fixtures in four sets (the author's, and
+   the spec, hostile and code reviewers') against `fixtures/expected.json`, the manifest of which
+   tests must fail for each file. See [`fixtures/README.md`](fixtures/README.md).
+4. `fixtures/remote_smoke.sh`: the public files on S3 and HTTPS listed above (needs the network).
+
 ## Findings for the spec and the corpus
 
 0. **Every Overture Maps file orders its bbox struct `xmin, xmax, ymin, ymax`.** GeoParquet 1.1 and
@@ -125,7 +137,7 @@ tests cover the decoder and the metric (`cargo test`).
 * A report format agreed with OGC CITE, packaging (cargo install, static binaries, a Python wheel
   via maturin if wanted), and one arrow pass for files with several geometry columns (today each
   geometry column is scanned separately).
-* More unit tests; the fixture script and the three reviewers' generators are the current regression set.
+* More unit tests; the fixture sets and their manifest are the regression suite today.
 
 ## Building
 

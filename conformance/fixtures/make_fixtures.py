@@ -1,5 +1,5 @@
-"""Adversarial fixtures for the conformance checker (not part of the corpus; written next to this
-file, git-ignored). Run from scripts/: uv run python ../conformance/fixtures/make_fixtures.py"""
+"""Adversarial fixtures for the conformance checker (not part of the corpus; written to
+fixtures/out/author/, git-ignored). Run everything with: cd scripts && uv run python ../conformance/fixtures/generate.py"""
 import json, sys
 from pathlib import Path
 import geoarrow.pyarrow as ga
@@ -10,7 +10,8 @@ from gpqgen.crs import CRS84
 from gpqgen.metadata import make_geo_metadata
 from gpqgen.write import write_parquet_deterministic
 
-OUT = Path(__file__).resolve().parent
+OUT = Path(__file__).resolve().parent / "out" / "author"
+OUT.mkdir(parents=True, exist_ok=True)
 EPSG3857 = {"$schema": "https://proj.org/schemas/v0.7/projjson.schema.json", "type": "ProjectedCRS", "name": "WGS 84 / Pseudo-Mercator",
   "base_crs": {"type": "GeographicCRS", "name": "WGS 84", "datum_ensemble": {"name": "World Geodetic System 1984 ensemble", "members": [{"name": "World Geodetic System 1984 (Transit)"}, {"name": "World Geodetic System 1984 (G2296)"}], "ellipsoid": {"name": "WGS 84", "semi_major_axis": 6378137, "inverse_flattening": 298.257223563}, "accuracy": "2.0", "id": {"authority": "EPSG", "code": 6326}},
     "coordinate_system": {"subtype": "ellipsoidal", "axis": [{"name": "Geodetic latitude", "abbreviation": "Lat", "direction": "north", "unit": "degree"}, {"name": "Geodetic longitude", "abbreviation": "Lon", "direction": "east", "unit": "degree"}]}, "id": {"authority": "EPSG", "code": 4326}},

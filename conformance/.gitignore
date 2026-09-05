@@ -1,2 +1,2 @@
 target/
-fixtures/*.parquet
+fixtures/out/

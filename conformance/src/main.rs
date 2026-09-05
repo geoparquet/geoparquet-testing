@@ -3,6 +3,7 @@ mod corpus;
 mod crs;
 mod source;
 mod spatial;
+mod verify;
 mod wkb;
 
 use std::path::PathBuf;
@@ -72,6 +73,16 @@ enum Cmd {
         dir: PathBuf,
         #[arg(long)]
         verbose: bool,
+    },
+    /// Regression suite: compare the failing tests of every file under DIR with a manifest
+    Verify {
+        dir: PathBuf,
+        /// JSON manifest of expected failing test ids per file
+        #[arg(long, default_value = "fixtures/expected.json")]
+        manifest: PathBuf,
+        /// Rewrite the manifest from the current verdicts (review the diff before committing)
+        #[arg(long)]
+        update: bool,
     },
 }
 
@@ -271,6 +282,13 @@ fn main() {
         }
         Cmd::Corpus { dir, verbose } => checks::Schemas::load()
             .and_then(|schemas| corpus::run(&dir, &schemas, verbose))
+            .map(|_| 0),
+        Cmd::Verify {
+            dir,
+            manifest,
+            update,
+        } => checks::Schemas::load()
+            .and_then(|schemas| verify::run(&dir, &manifest, update, &schemas))
             .map(|_| 0),
     };
     match code {
