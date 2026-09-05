@@ -6,3 +6,6 @@ The GeoParquet spec only allows `orientation: "counterclockwise"` (or omitted). 
 |---|---|---|
 | `polygon-ccw.parquet` | counterclockwise | CCW |
 | `polygon-cw.parquet`  | (omitted)        | CW  |
+| `polygon-with-hole-ccw.parquet` | counterclockwise | CCW exterior, CW hole |
+| `multipolygon-ccw.parquet` | counterclockwise | both parts CCW |
+| `geometrycollection-polygon-ccw.parquet` | counterclockwise | CCW polygon inside a GeometryCollection |

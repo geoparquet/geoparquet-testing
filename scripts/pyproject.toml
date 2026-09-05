@@ -23,6 +23,11 @@ tests = [
     "pytest >= 8.0.0",
     "jsonschema >= 4.20.0",
     "referencing >= 0.30.0",
+    # Reads the WKB back out of the fixtures to check that the geometries really
+    # have the property their metadata claims (winding order, bbox bounds). The
+    # generators write geometry through geoarrow, so checking with an independent
+    # reader is what makes these assertions worth having.
+    "shapely >= 2.1.0",
 ]
 dev = [
     "ruff",

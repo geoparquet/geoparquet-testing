@@ -34,6 +34,16 @@
     "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#metadata",
     "violation": "`geo` metadata bytes contain invalid UTF-8 byte (0xFF)"
   },
+  "geometry-column-not-in-columns.parquet": {
+    "expected_failure": "geometry_column_undeclared",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#column-metadata",
+    "violation": "`centroid` is a GEOMETRY column but has no entry in `columns` (each geometry column MUST be included)"
+  },
+  "geometry-types-duplicate-entries.parquet": {
+    "expected_failure": "schema_validation_error",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
+    "violation": "geometry_types lists \"Point\" twice; the entries must be unique"
+  },
   "geometry-types-mismatch-declared-point-actual-linestring.parquet": {
     "expected_failure": "geometry_type_mismatch",
     "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
@@ -64,39 +74,49 @@
     "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#file-metadata",
     "violation": "`geo` metadata is missing required `version` field"
   },
+  "orientation-ccw-declared-hole-ccw.parquet": {
+    "expected_failure": "orientation_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#orientation",
+    "violation": "orientation=counterclockwise declared but the interior ring is wound CCW (holes must be CW)"
+  },
+  "orientation-ccw-declared-multipolygon-part-cw.parquet": {
+    "expected_failure": "orientation_mismatch",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#orientation",
+    "violation": "orientation=counterclockwise declared but the second polygon of a MultiPolygon is wound CW"
+  },
   "orientation-ccw-declared-rings-cw.parquet": {
     "expected_failure": "orientation_mismatch",
-    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#winding-order",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#orientation",
     "violation": "orientation=counterclockwise declared but polygon rings are wound CW"
   },
   "primary-column-not-in-columns.parquet": {
-    "expected_failure": "schema_validation_error",
+    "expected_failure": "primary_column_mismatch",
     "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#file-metadata",
     "violation": "`primary_column` value does not appear as a key in `columns`"
   },
   "version-1-0-with-2-0-features.parquet": {
     "expected_failure": "version_feature_mismatch",
-    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version-and-schema",
     "violation": "version=1.0.0 declared but file uses 2.0-only epoch field"
   },
   "version-unknown.parquet": {
     "expected_failure": "version_unknown",
-    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version-and-schema",
     "violation": "version=99.0.0 is not a known GeoParquet version"
   },
   "wkb-truncated.parquet": {
     "expected_failure": "wkb_parse_error",
-    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
     "violation": "first row's WKB has 8 bytes chopped from the end"
   },
   "wkb-with-srid-prefix.parquet": {
     "expected_failure": "wkb_parse_error",
-    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
     "violation": "first row uses EWKB SRID prefix (not allowed in GeoParquet)"
   },
   "wkb-wrong-type-byte.parquet": {
     "expected_failure": "wkb_parse_error",
-    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+    "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
     "violation": "first row's WKB header declares LineString but body is a Point"
   },
   "zm-declared-xy-actual-xyz.parquet": {

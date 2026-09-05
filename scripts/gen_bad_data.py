@@ -34,6 +34,8 @@ EXPECTED_FAILURES = {
     "epoch_unsupported",
     "version_unknown",
     "version_feature_mismatch",
+    "primary_column_mismatch",
+    "geometry_column_undeclared",
 }
 
 
@@ -109,6 +111,7 @@ def main() -> None:
     register_zm_violations()
     register_version_violations()
     register_json_validity_violations()
+    register_column_metadata_violations()
 
     for bf in REGISTRY:
         bf.writer(BAD_DATA_DIR / bf.filename)
@@ -156,6 +159,22 @@ def register_geometry_type_violations() -> None:
         spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
         expected_failure="geometry_type_mismatch",
         writer=writer_mismatch,
+    ))
+    def writer_duplicates(out: Path) -> None:
+        # ["Point", "Point"]: the spec says the list must be unique (schema: uniqueItems)
+        table = make_simple_point_table(["POINT (0 0)", "POINT (1 1)"])
+        meta = make_geo_metadata(columns={"geometry": {
+            "encoding": "WKB",
+            "geometry_types": ["Point", "Point"],
+        }})
+        write_parquet_deterministic(table, out, meta)
+
+    register(BadFile(
+        filename="geometry-types-duplicate-entries.parquet",
+        violation="geometry_types lists \"Point\" twice; the entries must be unique",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#geometry_types",
+        expected_failure="schema_validation_error",
+        writer=writer_duplicates,
     ))
     register(BadFile(
         filename="geometry-types-missing-actual-type.parquet",
@@ -282,7 +301,7 @@ def register_missing_metadata_violations() -> None:
         filename="primary-column-not-in-columns.parquet",
         violation="`primary_column` value does not appear as a key in `columns`",
         spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#file-metadata",
-        expected_failure="schema_validation_error",
+        expected_failure="primary_column_mismatch",
         writer=writer_primary_not_in_columns,
     ))
 
@@ -322,21 +341,21 @@ def register_wkb_violations() -> None:
     register(BadFile(
         filename="wkb-truncated.parquet",
         violation="first row's WKB has 8 bytes chopped from the end",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
         expected_failure="wkb_parse_error",
         writer=writer_truncated,
     ))
     register(BadFile(
         filename="wkb-wrong-type-byte.parquet",
         violation="first row's WKB header declares LineString but body is a Point",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
         expected_failure="wkb_parse_error",
         writer=writer_wrong_type_byte,
     ))
     register(BadFile(
         filename="wkb-with-srid-prefix.parquet",
         violation="first row uses EWKB SRID prefix (not allowed in GeoParquet)",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
         expected_failure="wkb_parse_error",
         writer=writer_with_srid,
     ))
@@ -419,12 +438,83 @@ def register_orientation_violations() -> None:
         }})
         write_parquet_deterministic(table, out, meta)
 
+    def writer_hole_ccw(out: Path) -> None:
+        # CCW exterior ring but the hole is also CCW; holes must be CW
+        table = _pa.table({
+            "col": [0],
+            "geometry": _ga.as_wkb(["POLYGON ((0 0, 4 0, 4 4, 0 4, 0 0), (1 1, 2 1, 2 2, 1 2, 1 1))"]),
+        })
+        meta = make_geo_metadata(columns={"geometry": {
+            "encoding": "WKB",
+            "geometry_types": ["Polygon"],
+            "orientation": "counterclockwise",
+        }})
+        write_parquet_deterministic(table, out, meta)
+
+    def writer_multipolygon_part_cw(out: Path) -> None:
+        # first part CCW, second part CW; every polygon of a MultiPolygon must comply
+        table = _pa.table({
+            "col": [0],
+            "geometry": _ga.as_wkb([
+                "MULTIPOLYGON (((0 0, 1 0, 1 1, 0 1, 0 0)), ((2 2, 2 3, 3 3, 3 2, 2 2)))",
+            ]),
+        })
+        meta = make_geo_metadata(columns={"geometry": {
+            "encoding": "WKB",
+            "geometry_types": ["MultiPolygon"],
+            "orientation": "counterclockwise",
+        }})
+        write_parquet_deterministic(table, out, meta)
+
+    register(BadFile(
+        filename="orientation-ccw-declared-hole-ccw.parquet",
+        violation="orientation=counterclockwise declared but the interior ring is wound CCW (holes must be CW)",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#orientation",
+        expected_failure="orientation_mismatch",
+        writer=writer_hole_ccw,
+    ))
+    register(BadFile(
+        filename="orientation-ccw-declared-multipolygon-part-cw.parquet",
+        violation="orientation=counterclockwise declared but the second polygon of a MultiPolygon is wound CW",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#orientation",
+        expected_failure="orientation_mismatch",
+        writer=writer_multipolygon_part_cw,
+    ))
     register(BadFile(
         filename="orientation-ccw-declared-rings-cw.parquet",
         violation="orientation=counterclockwise declared but polygon rings are wound CW",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#winding-order",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#orientation",
         expected_failure="orientation_mismatch",
         writer=writer_declared_ccw_actual_cw,
+    ))
+
+
+def register_column_metadata_violations() -> None:
+    from gpqgen.metadata import make_geo_metadata
+    from gpqgen.write import write_parquet_deterministic
+
+    def writer_undeclared_column(out: Path) -> None:
+        # two GEOMETRY columns, `columns` describes only the primary one
+        table = pa.table({
+            "building_id": [1, 2],
+            "footprint": ga.as_wkb([
+                "POLYGON ((0 0, 1 0, 1 1, 0 1, 0 0))",
+                "POLYGON ((2 2, 3 2, 3 3, 2 3, 2 2))",
+            ]),
+            "centroid": ga.as_wkb(["POINT (0.5 0.5)", "POINT (2.5 2.5)"]),
+        })
+        meta = make_geo_metadata(primary_column="footprint", columns={"footprint": {
+            "encoding": "WKB",
+            "geometry_types": ["Polygon"],
+        }})
+        write_parquet_deterministic(table, out, meta)
+
+    register(BadFile(
+        filename="geometry-column-not-in-columns.parquet",
+        violation="`centroid` is a GEOMETRY column but has no entry in `columns` (each geometry column MUST be included)",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#column-metadata",
+        expected_failure="geometry_column_undeclared",
+        writer=writer_undeclared_column,
     ))
 
 
@@ -524,14 +614,14 @@ def register_version_violations() -> None:
     register(BadFile(
         filename="version-unknown.parquet",
         violation="version=99.0.0 is not a known GeoParquet version",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version-and-schema",
         expected_failure="version_unknown",
         writer=writer_unknown_version,
     ))
     register(BadFile(
         filename="version-1-0-with-2-0-features.parquet",
         violation="version=1.0.0 declared but file uses 2.0-only epoch field",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version-and-schema",
         expected_failure="version_feature_mismatch",
         writer=writer_v1_with_v2_features,
     ))
