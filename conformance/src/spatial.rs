@@ -13,6 +13,7 @@ pub const PASS_RATIO: f64 = 0.70;
 /// numbers are reported but no verdict is given (gpio #774 does the same).
 pub const MIN_ROW_GROUPS: usize = 5;
 
+#[derive(Debug)]
 pub struct Metric {
     pub row_groups: usize,
     pub file_skip: f64,

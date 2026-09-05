@@ -73,10 +73,17 @@ pub fn run(dir: &Path, manifest: &Path, update: bool, schemas: &Schemas) -> Resu
             }
             Some(act) if act != exp => {
                 problems += 1;
-                println!(
-                    "  CHANGED  {name}: expected fail {:?}, got {:?}",
-                    exp.fail, act.fail
-                );
+                if act.fail != exp.fail {
+                    println!(
+                        "  CHANGED  {name}: expected fail {:?}, got {:?}",
+                        exp.fail, act.fail
+                    );
+                } else {
+                    println!(
+                        "  CHANGED  {name}: expected skip {:?}, got {:?}",
+                        exp.skip, act.skip
+                    );
+                }
             }
             _ => {}
         }
