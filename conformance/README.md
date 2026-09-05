@@ -76,6 +76,21 @@ Remote files, from a laptop (about 5 MB/s to S3):
 | Overture 2026-08-19.0 divisions/division_area part-00000 (721 MB, 138 481 polygons, S3), whole file | all | 804 MB / 341 | 240 s | every WKB polygon decoded; same verdicts |
 | source.coop / geoarrow-data 1.0 files (HTTPS) | all | 1 to 8 MB / 1 | 1 to 4 s | 1.0 files fail version and logical type as expected |
 
+## Writer zoo (2026-09-06)
+
+The same 250 features (200 points, 50 CCW squares, lon/lat) written by every writer at hand
+(`fixtures/writer_zoo.py`), then checked. Only two writers produce GeoParquet 2.0 today:
+
+| Writer | Asked for | Result |
+| --- | --- | --- |
+| DuckDB 1.5.5 spatial, `GEOPARQUET_VERSION 'V2'` | CRS84 | **Core conformant**. Parquet `crs` is inline PROJJSON (schema v0.5) EPSG:4326, `geo.crs` PROJJSON EPSG:4326. |
+| DuckDB 1.5.5, same, after `ST_Transform` to EPSG:3857 | EPSG:3857 | **Mislabelled**: DuckDB geometries carry no CRS, so the file declares the default OGC:CRS84 while coordinates are metres. Caught by `crs-default` (250 geometries outside lon/lat range) and `bbox-crs`. A DuckDB user cannot fix this from `COPY` today. |
+| SedonaDB 0.4.1, `geoparquet_version="2.0"` | CRS84 and EPSG:3857 | **Core conformant** both; PROJJSON (v0.7) in both the Parquet `crs` and `geo.crs`. |
+| GDAL 3.12.2 `ogr2ogr -lco USE_PARQUET_GEO_TYPES=YES` | CRS84 and EPSG:3857 | Native GEOMETRY types with consistent CRS, covering bbox in the right order, but `geo.version` is **1.1.0**: GDAL has no 2.0.0 writer yet, so the file fails only `geo-metadata` and `file-metadata`. `USE_PARQUET_GEO_TYPES=ONLY` writes no `geo` block at all. |
+| GeoPandas 1.1.4 | `schema_version="2.0.0"` | Rejected: `must be one of 0.1.0 ... 1.1.0`. Its 1.1.0 output (with `write_covering_bbox`) is well formed, bbox fields in the right order. |
+| geoarrow-pyarrow 0.3 `write_geoparquet_table` | default | Writes 1.0.0, no logical type, `crs: null` for lon/lat data. |
+| pyarrow 25 alone | native type only | GEOMETRY logical type, no `geo` block: not GeoParquet, as the spec says. |
+
 ## Hardening round (2026-09-06)
 
 Three independent reviews (spec-conformance, hostile input, Rust code/perf) and 150+ crafted files.
