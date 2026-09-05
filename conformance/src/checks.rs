@@ -2,14 +2,12 @@
 //! per conformance class, run on a single file with nothing but the parquet crate.
 
 use std::collections::{BTreeMap, BTreeSet, HashMap};
-use std::fs::File;
-use std::path::Path;
 use std::sync::Arc;
 
-use anyhow::{Context, Result, anyhow};
-use arrow::array::{Array, ArrayRef, BinaryArray, BinaryViewArray, LargeBinaryArray};
+use anyhow::{Result, anyhow};
+use arrow_array::{Array, ArrayRef, BinaryArray, BinaryViewArray, LargeBinaryArray};
 use parquet::arrow::ProjectionMask;
-use parquet::arrow::arrow_reader::ParquetRecordBatchReaderBuilder;
+use parquet::arrow::arrow_reader::{ArrowReaderOptions, ParquetRecordBatchReaderBuilder};
 use parquet::basic::{LogicalType, Repetition, Type as PhysicalType};
 use parquet::file::metadata::ParquetMetaData;
 use parquet::file::reader::{FileReader, SerializedFileReader};
@@ -18,6 +16,7 @@ use serde::Serialize;
 use serde_json::Value;
 
 use crate::crs::{self, Crs};
+use crate::source::Source;
 use crate::spatial;
 use crate::wkb;
 
@@ -118,10 +117,19 @@ impl Outcome {
     }
 }
 
+#[derive(Clone, Default)]
+pub struct Options {
+    /// Read only the first N rows (whole row groups); data tests are then sampled.
+    pub max_rows: Option<usize>,
+}
+
 #[derive(Serialize)]
 pub struct Report {
     pub file: String,
     pub outcomes: Vec<Outcome>,
+    /// (bytes fetched, range requests) for remote sources
+    pub traffic: Option<(u64, u64)>,
+    pub sampled: bool,
 }
 
 impl Report {
@@ -145,12 +153,10 @@ pub struct Schemas {
 impl Schemas {
     pub fn load() -> Result<Schemas> {
         let geo: Value = serde_json::from_str(include_str!("../schemas/geoparquet-2.0.0.json"))?;
-        // The PROJJSON schema also describes datums, ellipsoids and operations; a GeoParquet
-        // `crs` must be a CRS, so validate against its `crs` definition only.
-        let mut projjson: Value =
+        let projjson: Value =
             serde_json::from_str(include_str!("../schemas/projjson.schema.json"))?;
-        projjson["oneOf"] = serde_json::json!([{ "$ref": "#/definitions/crs" }]);
-        // schema.json refers to the PROJJSON schema by URL; serve the vendored copy instead of fetching it.
+        // schema.json refers to the PROJJSON schema by URL; serve the vendored copy instead of
+        // fetching it, unmodified, so /conf/core/geo-metadata validates against the published schema.
         let registry = jsonschema::Registry::new()
             .add(
                 "https://proj.org/schemas/v0.7/projjson.schema.json",
@@ -158,12 +164,16 @@ impl Schemas {
             )
             .and_then(|b| b.prepare())
             .map_err(|e| anyhow!("schema registry: {e}"))?;
+        // The PROJJSON schema also describes datums, ellipsoids and operations; a GeoParquet
+        // `crs` must be a CRS, so /conf/core/crs-projjson validates against its `crs` definition.
+        let mut crs_only = projjson.clone();
+        crs_only["oneOf"] = serde_json::json!([{ "$ref": "#/definitions/crs" }]);
         Ok(Schemas {
             geo: jsonschema::options()
                 .with_registry(&registry)
                 .build(&geo)
                 .map_err(|e| anyhow!("geoparquet schema: {e}"))?,
-            projjson: jsonschema::validator_for(&projjson)
+            projjson: jsonschema::validator_for(&crs_only)
                 .map_err(|e| anyhow!("projjson schema: {e}"))?,
         })
     }
@@ -248,6 +258,17 @@ fn parquet_crs(lt: &Option<LogicalType>) -> Option<String> {
     }
 }
 
+/// Whether a field named `name` exists anywhere below the root (in a group), i.e. is nested.
+fn schema_has_nested(fields: &[Arc<SchemaType>], name: &str) -> bool {
+    fields.iter().any(|f| {
+        f.is_group()
+            && f.get_fields().iter().any(|c| {
+                c.name() == name
+                    || (c.is_group() && schema_has_nested(std::slice::from_ref(c), name))
+            })
+    })
+}
+
 fn valid_type_name(s: &str) -> bool {
     let base = s
         .strip_suffix(" ZM")
@@ -317,6 +338,11 @@ struct Scan {
     rings_bad: usize,
     bbox_rep_checked: bool,
     bbox_rep_mismatch: usize,
+    total_rows: i64,
+    sampled: bool,
+    /// vertices with x >= bbox xmin / x <= bbox xmax, counted when the declared bbox wraps
+    wrap_east: usize,
+    wrap_west: usize,
 }
 
 fn binary_at(arr: &ArrayRef, i: usize) -> Result<Option<&[u8]>> {
@@ -370,14 +396,20 @@ fn inside_bbox(bb: &[f64], g: &wkb::Geom) -> bool {
     true
 }
 
-fn scan_column(
-    path: &Path,
+fn scan_column<S: Source>(
+    src: &S,
     name: &str,
     bbox_col: Option<&str>,
     declared_bbox: Option<&[f64]>,
     geodesic: bool,
+    max_rows: Option<usize>,
 ) -> Result<Scan> {
-    let builder = ParquetRecordBatchReaderBuilder::try_new(File::open(path)?)?;
+    // Ignore the writer's Arrow schema hint so a dictionary- or string-hinted BYTE_ARRAY still
+    // arrives as a plain BinaryArray.
+    let mut builder = ParquetRecordBatchReaderBuilder::try_new_with_options(
+        src.open()?,
+        ArrowReaderOptions::new().with_skip_arrow_metadata(true),
+    )?;
     let schema = builder.parquet_schema();
     let root = schema.root_schema().get_fields();
     let mut idx = vec![
@@ -393,19 +425,57 @@ fn scan_column(
             false
         }
     });
-    let mask = ProjectionMask::roots(schema, idx);
+    let mask = ProjectionMask::roots(schema, idx.clone());
+    let total_rows = builder.metadata().file_metadata().num_rows();
+    let mut groups: Vec<usize> = (0..builder.metadata().num_row_groups()).collect();
+    if let Some(max) = max_rows {
+        let mut acc = 0i64;
+        groups.clear();
+        for (i, rg) in builder.metadata().row_groups().iter().enumerate() {
+            if acc >= max as i64 {
+                break;
+            }
+            groups.push(i);
+            acc += rg.num_rows();
+        }
+    }
+    // Tell the source which column chunks the scan will read (all leaves under the projected roots).
+    let roots: Vec<&str> = idx.iter().map(|i| root[*i].name()).collect();
+    let mut ranges = Vec::new();
+    for rg in &groups {
+        for cc in builder.metadata().row_group(*rg).columns() {
+            if cc
+                .column_path()
+                .parts()
+                .first()
+                .is_some_and(|p| roots.contains(&p.as_str()))
+            {
+                ranges.push(cc.byte_range());
+            }
+        }
+    }
+    src.hint_ranges(ranges);
+    if max_rows.is_some() {
+        builder = builder.with_row_groups(groups);
+    }
     let reader = builder
         .with_projection(mask)
         .with_batch_size(16 * 1024)
         .build()?;
-    let mut sc = Scan::default();
-    for batch in reader {
+    let mut sc = Scan {
+        total_rows,
+        ..Scan::default()
+    };
+    'rows: for batch in reader {
         let batch = batch?;
         let geom = batch
             .column_by_name(name)
             .ok_or_else(|| anyhow!("column {name} missing from batch"))?;
         let bbox_arr = bbox_col.and_then(|b| batch.column_by_name(b));
         for i in 0..batch.num_rows() {
+            if max_rows.is_some_and(|m| sc.rows >= m) {
+                break 'rows;
+            }
             sc.rows += 1;
             let value = binary_at(geom, i)?;
             if let Some(b) = bbox_arr {
@@ -434,10 +504,15 @@ fn scan_column(
             {
                 sc.lonlat_bad += 1;
             }
-            if let Some(bb) = declared_bbox
-                && !inside_bbox(bb, &g)
-            {
-                sc.outside_bbox += 1;
+            if let Some(bb) = declared_bbox {
+                if !inside_bbox(bb, &g) {
+                    sc.outside_bbox += 1;
+                }
+                let half = bb.len() / 2;
+                if bb[0] > bb[half] {
+                    sc.wrap_east += g.xy.iter().filter(|(x, _)| *x >= bb[0]).count();
+                    sc.wrap_west += g.xy.iter().filter(|(x, _)| *x <= bb[half]).count();
+                }
             }
             for rings in &g.polygons {
                 for (k, (s, n)) in rings.iter().enumerate() {
@@ -465,6 +540,7 @@ fn scan_column(
             }
         }
     }
+    sc.sampled = (sc.rows as i64) < total_rows;
     Ok(sc)
 }
 
@@ -479,9 +555,10 @@ fn chunk<'a>(
         .find(|c| c.column_path().parts().first().map(String::as_str) == Some(name))
 }
 
-pub fn run(path: &Path, schemas: &Schemas) -> Report {
+pub fn run<S: Source>(src: &S, schemas: &Schemas, opts: &Options) -> Result<Report> {
     let mut out: Vec<Outcome> = Vec::new();
-    let file = path.display().to_string();
+    let file = src.describe();
+    let sampled = std::cell::Cell::new(false);
     let finish = |mut out: Vec<Outcome>, reason: &str| {
         for id in ALL_IDS {
             if !out.iter().any(|o| o.id == id) {
@@ -492,21 +569,27 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
         Report {
             file: file.clone(),
             outcomes: out,
+            traffic: src.traffic(),
+            sampled: sampled.get(),
         }
     };
 
-    let reader = match File::open(path)
-        .context("open")
-        .and_then(|f| SerializedFileReader::new(f).context("parse footer"))
-    {
+    let handle = src.open()?; // I/O errors are the tool's problem, not the file's
+    let reader = match SerializedFileReader::new(handle) {
         Ok(r) => r,
         Err(e) => {
+            let msg = e.to_string();
+            let message = if msg.to_ascii_lowercase().contains("utf-8") {
+                format!("a key/value metadata string (`geo`?) is not valid UTF-8: {msg}")
+            } else {
+                format!("Parquet footer cannot be read: {msg}")
+            };
             out.push(Outcome {
                 id: GEO_METADATA,
                 status: Status::Fail,
-                message: format!("Parquet footer cannot be read: {e:#}"),
+                message,
             });
-            return finish(out, "file not readable");
+            return Ok(finish(out, "file not readable"));
         }
     };
     let meta = reader.metadata();
@@ -547,7 +630,7 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
     };
     out.push(t.finish());
     let Some(geo) = geo else {
-        return finish(out, "no usable geo metadata");
+        return Ok(finish(out, "no usable geo metadata"));
     };
 
     // /conf/core/file-metadata
@@ -579,8 +662,10 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
         .root_schema()
         .get_fields()
         .to_vec();
-    let root_by_name: HashMap<&str, &Arc<SchemaType>> =
-        root.iter().map(|f| (f.name(), f)).collect();
+    let mut root_by_name: HashMap<&str, &Arc<SchemaType>> = HashMap::new();
+    for f in &root {
+        root_by_name.entry(f.name()).or_insert(f);
+    }
 
     // /conf/core/column-metadata
     let mut t = T::new(COLUMN_METADATA);
@@ -618,9 +703,15 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
     let mut geom_fields: BTreeMap<&str, &Arc<SchemaType>> = BTreeMap::new();
     for (name, col) in &columns {
         let Some(f) = root_by_name.get(name.as_str()) else {
-            t_nest.fail(format!(
-                "`{name}`: no schema element with that name at the root of the Parquet schema"
-            ));
+            if schema_has_nested(&root, name) {
+                t_nest.fail(format!(
+                    "`{name}` is nested below the root of the Parquet schema"
+                ));
+            } else {
+                t_nest.note(format!(
+                    "`{name}`: no schema element of that name (the specification does not require one)"
+                ));
+            }
             continue;
         };
         if f.is_group() {
@@ -643,9 +734,10 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
                 lt.map(|l| format!("{l:?}")).unwrap_or("none".into())
             ));
         }
-        match col.get("encoding").and_then(Value::as_str) {
-            Some("WKB") | None => {}
-            Some(e) => t_type.fail(format!("`{name}`: encoding is \"{e}\", expected \"WKB\"")),
+        match col.get("encoding") {
+            Some(Value::String(e)) if e == "WKB" => {}
+            Some(v) => t_type.fail(format!("`{name}`: encoding is {v}, expected \"WKB\"")),
+            None => t_type.fail(format!("`{name}`: encoding is missing, expected \"WKB\"")),
         }
         let bi = f.get_basic_info();
         if !bi.has_repetition() {
@@ -662,7 +754,7 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
 
     // one pass over the data of every geometry column that is a root BYTE_ARRAY
     let mut scans: BTreeMap<&str, Scan> = BTreeMap::new();
-    let mut scan_errors: Vec<String> = Vec::new();
+    let mut scan_errors: BTreeMap<&str, String> = BTreeMap::new();
     for (name, f) in &geom_fields {
         if f.get_physical_type() != PhysicalType::BYTE_ARRAY {
             continue;
@@ -674,26 +766,43 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
             .get("edges")
             .and_then(Value::as_str)
             .is_some_and(|e| e != "planar");
-        match scan_column(path, name, bbox_col.as_deref(), bbox.as_deref(), geodesic) {
+        match scan_column(
+            src,
+            name,
+            bbox_col.as_deref(),
+            bbox.as_deref(),
+            geodesic,
+            opts.max_rows,
+        ) {
             Ok(sc) => {
+                if sc.sampled {
+                    sampled.set(true);
+                }
                 scans.insert(name, sc);
             }
-            Err(e) => scan_errors.push(format!("`{name}`: {e:#}")),
+            Err(e) => {
+                scan_errors.insert(name, format!("{e:#}"));
+            }
         }
     }
 
     // /conf/core/wkb
     let mut t = T::new(WKB);
-    for e in &scan_errors {
-        t.fail(format!("cannot read column: {e}"));
+    for (name, e) in &scan_errors {
+        t.fail(format!("`{name}`: cannot read column: {e}"));
     }
     for (name, sc) in &scans {
         t.ok();
         for e in &sc.wkb_errors {
             t.fail(format!("`{name}`: {e}"));
         }
+        let sample = if sc.sampled {
+            format!(" (first {} of {} rows)", sc.rows, sc.total_rows)
+        } else {
+            String::new()
+        };
         t.note(format!(
-            "`{name}`: {} values decoded, {} null",
+            "`{name}`: {} values decoded, {} null{sample}",
             sc.rows - sc.nulls,
             sc.nulls
         ));
@@ -736,6 +845,10 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
                     ));
                 }
             }
+        } else if let Some(e) = scan_errors.get(name.as_str()) {
+            t.note(format!(
+                "`{name}`: data not read ({e}); types in the data not verified"
+            ));
         }
         for rg in 0..meta.num_row_groups() {
             let Some(codes) = chunk(meta, rg, name)
@@ -787,9 +900,7 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
         let b = Crs::from_parquet(parquet_crs(&lt).as_deref(), &kv);
         match (&a, &b) {
             (Crs::Undefined, Crs::Undefined) => t.ok(),
-            (Crs::Authority(..), Crs::Authority(..)) | (Crs::Named(_), Crs::Named(_)) if a == b => {
-                t.ok()
-            }
+            (Crs::Authority(..), Crs::Authority(..)) if a == b => t.ok(),
             (Crs::Authority(..), Crs::Authority(..))
             | (Crs::Undefined, _)
             | (_, Crs::Undefined) => t.fail(format!(
@@ -804,20 +915,27 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
             )),
         }
         if col.get("crs").is_none() {
-            if b == Crs::crs84() {
-                td.ok();
-            } else {
-                td.fail(format!(
+            match &b {
+                b if *b == Crs::crs84() => td.ok(),
+                Crs::Authority(..) | Crs::Undefined => td.fail(format!(
                     "`{name}`: no geo crs (default OGC:CRS84) but Parquet crs is {}",
                     b.describe()
-                ));
+                )),
+                _ => td.note(format!(
+                    "`{name}`: Parquet crs is {}; cannot compare with OGC:CRS84 without a CRS library",
+                    b.describe()
+                )),
             }
-            if let Some(sc) = scans.get(name)
-                && sc.lonlat_bad > 0
-            {
-                td.fail(format!(
-                    "`{name}`: {} geometries have coordinates outside [-180,180]x[-90,90]",
-                    sc.lonlat_bad
+            if let Some(sc) = scans.get(name) {
+                if sc.lonlat_bad > 0 {
+                    td.fail(format!(
+                        "`{name}`: {} geometries have coordinates outside [-180,180]x[-90,90]",
+                        sc.lonlat_bad
+                    ));
+                }
+            } else if let Some(e) = scan_errors.get(name) {
+                td.note(format!(
+                    "`{name}`: data not read ({e}); coordinate ranges not verified"
                 ));
             }
         }
@@ -825,21 +943,29 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
     out.push(t.finish());
     out.push(td.finish());
 
-    // /conf/core/axis-order (heuristic on geographic CRS)
+    // /conf/core/axis-order (heuristic; applies to CRSs whose first axis is latitude)
     let mut t = T::new(AXIS_ORDER);
     for (name, col) in &columns {
-        if !geographic(col) {
-            t.ok();
-            t.note(format!(
-                "`{name}`: not a geographic CRS, trivially satisfied"
-            ));
-            continue;
-        }
-        if let Some(sc) = scans.get(name.as_str()) {
-            t.ok();
-            if sc.lonlat_bad > 0 {
-                t.fail(format!("`{name}`: {} geometries have first/second coordinates outside longitude/latitude range", sc.lonlat_bad));
+        match crs::lat_lon_order(col) {
+            Some(true) => {
+                if let Some(sc) = scans.get(name.as_str()) {
+                    t.ok();
+                    if sc.lonlat_bad > 0 {
+                        t.fail(format!("`{name}`: {} geometries have first/second coordinates outside longitude/latitude range", sc.lonlat_bad));
+                    }
+                } else if let Some(e) = scan_errors.get(name.as_str()) {
+                    t.note(format!("`{name}`: data not read ({e})"));
+                }
             }
+            Some(false) => {
+                t.ok();
+                t.note(format!(
+                    "`{name}`: easting-northing (or undefined) axis order, trivially satisfied"
+                ));
+            }
+            None => t.note(format!(
+                "`{name}`: axis order of the CRS cannot be determined; not checked"
+            )),
         }
     }
     out.push(t.finish());
@@ -881,7 +1007,9 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
             continue;
         }
         let Some(sc) = scans.get(name.as_str()) else {
-            t.note(format!("`{name}`: data not readable"));
+            if let Some(e) = scan_errors.get(name.as_str()) {
+                t.note(format!("`{name}`: data not read ({e})"));
+            }
             continue;
         };
         t.ok();
@@ -925,9 +1053,15 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
                 ta.fail(format!("`{name}`: bbox ymin {ymin} > ymax {ymax}"));
             }
             if xmin > xmax {
-                ta.note(format!(
-                    "`{name}`: bbox crosses the antimeridian (xmin {xmin} > xmax {xmax})"
-                ));
+                match scans.get(name.as_str()) {
+                    Some(sc) if sc.wrap_east == 0 || sc.wrap_west == 0 => ta.fail(format!(
+                        "`{name}`: bbox xmin {xmin} > xmax {xmax} but the data does not cross the antimeridian ({} vertices at x >= xmin, {} at x <= xmax)",
+                        sc.wrap_east, sc.wrap_west
+                    )),
+                    _ => ta.note(format!(
+                        "`{name}`: bbox crosses the antimeridian (xmin {xmin} > xmax {xmax})"
+                    )),
+                }
             }
             tc.ok();
             if !(-180.0..=180.0).contains(&xmin)
@@ -952,6 +1086,8 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
                     sc.outside_bbox
                 ));
             }
+        } else if let Some(e) = scan_errors.get(name.as_str()) {
+            tx.note(format!("`{name}`: data not read ({e})"));
         }
     }
     out.push(ta.finish());
@@ -1002,7 +1138,13 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
             };
             let Some(bf) = root_by_name.get(bcol.as_str()) else {
                 tp.fail(format!("`{name}`: covering names column `{bcol}`, which is not at the root of the Parquet schema"));
-                tn.fail(format!("`{name}`: no root column `{bcol}`"));
+                if schema_has_nested(&root, &bcol) {
+                    tn.fail(format!(
+                        "`{name}`: bounding box column `{bcol}` is nested below the root"
+                    ));
+                } else {
+                    tn.note(format!("`{name}`: no column `{bcol}` to check"));
+                }
                 continue;
             };
             tn.ok();
@@ -1115,8 +1257,8 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
     });
     out.push(match boxes {
         Some(b) if b.len() == meta.num_row_groups() => match spatial::measure(&b) {
-            None => skip(DIST_SPATIAL_ORDER, format!("{} row group(s) or degenerate extent: pruning cannot be measured", b.len())),
-            Some(m) => {
+            Err(reason) => skip(DIST_SPATIAL_ORDER, reason),
+            Ok(m) => {
                 let msg = format!(
                     "{} row groups: skip rate {:.3} vs ideal tiling {:.3} (ratio {:.2}, pass at {:.2}); area factor {:.2}",
                     m.row_groups, m.file_skip, m.ideal_skip, m.ratio, spatial::PASS_RATIO, m.area_factor
@@ -1127,5 +1269,5 @@ pub fn run(path: &Path, schemas: &Schemas) -> Report {
         _ => skip(DIST_SPATIAL_ORDER, "primary column lacks geospatial statistics in some row group"),
     });
 
-    finish(out, "not run")
+    Ok(finish(out, "not run"))
 }

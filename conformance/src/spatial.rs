@@ -1,6 +1,6 @@
 //! Spatial-order metric of /conf/distribution/spatial-order: skip rate over sample windows,
-//! relative to an ideal grid tiling with the same number of row groups. Parameters are the
-//! test suite's, fixed here so the result is reproducible.
+//! relative to an ideal tiling of the extent into the same number of row groups. Parameters are
+//! the test suite's, fixed here so the result is reproducible.
 
 pub const WINDOWS: usize = 20;
 pub const WINDOW_FRACTION: f64 = 0.10; // window side as a fraction of the extent side
@@ -12,7 +12,7 @@ pub struct Metric {
     pub file_skip: f64,
     pub ideal_skip: f64,
     pub ratio: f64,
-    /// sum of row-group bbox areas over the extent area; 1.0 is a perfect tiling
+    /// sum of row-group bbox areas (lengths, for a one-dimensional extent) over the extent
     pub area_factor: f64,
 }
 
@@ -21,19 +21,69 @@ fn intersects(a: &[f64; 4], b: &[f64; 4]) -> bool {
 }
 
 fn skip_rate(boxes: &[[f64; 4]], windows: &[[f64; 4]]) -> f64 {
-    let mut total = 0.0;
-    for w in windows {
-        let skipped = boxes.iter().filter(|b| !intersects(b, w)).count();
-        total += skipped as f64 / boxes.len() as f64;
-    }
-    total / windows.len() as f64
+    windows
+        .iter()
+        .map(|w| boxes.iter().filter(|b| !intersects(b, w)).count() as f64 / boxes.len() as f64)
+        .sum::<f64>()
+        / windows.len() as f64
 }
 
-pub fn measure(boxes: &[[f64; 4]]) -> Option<Metric> {
-    if boxes.len() < 2 {
-        return None;
+/// Exactly `n` tiles covering the extent: a grid of `cols` columns; the last row holds the
+/// remainder, stretched across the full width.
+fn ideal_tiling(ext: &[f64; 4], n: usize) -> Vec<[f64; 4]> {
+    let (w, h) = (ext[2] - ext[0], ext[3] - ext[1]);
+    if h == 0.0 || w == 0.0 {
+        // one-dimensional extent: n equal strips along the non-degenerate axis
+        return (0..n)
+            .map(|i| {
+                let (a, b) = (i as f64 / n as f64, (i + 1) as f64 / n as f64);
+                if h == 0.0 {
+                    [ext[0] + a * w, ext[1], ext[0] + b * w, ext[3]]
+                } else {
+                    [ext[0], ext[1] + a * h, ext[2], ext[1] + b * h]
+                }
+            })
+            .collect();
     }
-    let ext = boxes
+    let cols = (n as f64).sqrt().ceil() as usize;
+    let full_rows = n / cols;
+    let rest = n % cols;
+    let rows = full_rows + usize::from(rest > 0);
+    let rh = h / rows as f64;
+    let mut tiles = Vec::with_capacity(n);
+    for r in 0..rows {
+        let ncols = if r < full_rows { cols } else { rest };
+        let cw = w / ncols as f64;
+        for c in 0..ncols {
+            let (x0, y0) = (ext[0] + c as f64 * cw, ext[1] + r as f64 * rh);
+            tiles.push([x0, y0, x0 + cw, y0 + rh]);
+        }
+    }
+    tiles
+}
+
+/// `boxes` are the row-group statistics bounding boxes [xmin, ymin, xmax, ymax]; a box with
+/// xmin > xmax wraps the antimeridian and is split in two for the measurement.
+pub fn measure(boxes: &[[f64; 4]]) -> Result<Metric, String> {
+    let n = boxes.len();
+    if n < 2 {
+        return Err(format!("{n} row group(s): pruning cannot be measured"));
+    }
+    if let Some(i) = boxes.iter().position(|b| b.iter().any(|v| !v.is_finite())) {
+        return Err(format!(
+            "row group {i} has non-finite geospatial statistics"
+        ));
+    }
+    let mut parts: Vec<[f64; 4]> = Vec::with_capacity(n);
+    for b in boxes {
+        if b[0] > b[2] {
+            parts.push([b[0], b[1], 180.0, b[3]]);
+            parts.push([-180.0, b[1], b[2], b[3]]);
+        } else {
+            parts.push(*b);
+        }
+    }
+    let ext = parts
         .iter()
         .fold([f64::MAX, f64::MAX, f64::MIN, f64::MIN], |e, b| {
             [
@@ -44,8 +94,8 @@ pub fn measure(boxes: &[[f64; 4]]) -> Option<Metric> {
             ]
         });
     let (w, h) = (ext[2] - ext[0], ext[3] - ext[1]);
-    if !(w > 0.0 && h > 0.0) {
-        return None;
+    if w == 0.0 && h == 0.0 {
+        return Err("all row groups share a single point; there is nothing to prune".into());
     }
     let mut state = SEED;
     let mut rnd = || {
@@ -62,26 +112,26 @@ pub fn measure(boxes: &[[f64; 4]]) -> Option<Metric> {
             [x0, y0, x0 + ww, y0 + wh]
         })
         .collect();
-    let n = boxes.len();
-    let cols = (n as f64).sqrt().ceil() as usize;
-    let rows = n.div_ceil(cols);
-    let (cw, ch) = (w / cols as f64, h / rows as f64);
-    let mut ideal = Vec::with_capacity(cols * rows);
-    for r in 0..rows {
-        for c in 0..cols {
-            let x0 = ext[0] + c as f64 * cw;
-            let y0 = ext[1] + r as f64 * ch;
-            ideal.push([x0, y0, x0 + cw, y0 + ch]);
-        }
-    }
-    let file_skip = skip_rate(boxes, &windows);
+    let ideal = ideal_tiling(&ext, n);
+    let file_skip = skip_rate(&parts, &windows);
     let ideal_skip = skip_rate(&ideal, &windows);
-    let area_factor = boxes
-        .iter()
-        .map(|b| (b[2] - b[0]) * (b[3] - b[1]))
-        .sum::<f64>()
-        / (w * h);
-    Some(Metric {
+    let measure = |b: &[f64; 4]| {
+        if w == 0.0 {
+            b[3] - b[1]
+        } else if h == 0.0 {
+            b[2] - b[0]
+        } else {
+            (b[2] - b[0]) * (b[3] - b[1])
+        }
+    };
+    let extent = if w == 0.0 {
+        h
+    } else if h == 0.0 {
+        w
+    } else {
+        w * h
+    };
+    Ok(Metric {
         row_groups: n,
         file_skip,
         ideal_skip,
@@ -90,6 +140,60 @@ pub fn measure(boxes: &[[f64; 4]]) -> Option<Metric> {
         } else {
             1.0
         },
-        area_factor,
+        area_factor: parts.iter().map(measure).sum::<f64>() / extent,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn perfect_grids_score_one_and_strips_score_high() {
+        for side in [2usize, 3, 4] {
+            let boxes: Vec<[f64; 4]> = (0..side * side)
+                .map(|i| {
+                    let (c, r) = ((i % side) as f64, (i / side) as f64);
+                    [c, r, c + 1.0, r + 1.0]
+                })
+                .collect();
+            let m = measure(&boxes).unwrap();
+            assert!(
+                (m.ratio - 1.0).abs() < 1e-9,
+                "n={} ratio={}",
+                side * side,
+                m.ratio
+            );
+            assert!((m.area_factor - 1.0).abs() < 1e-9);
+        }
+        // equal strips are a tiling too, but a grid prunes square windows better: high, not 1.0
+        let strips: Vec<[f64; 4]> = (0..5)
+            .map(|i| [i as f64, 0.0, i as f64 + 1.0, 1.0])
+            .collect();
+        let m = measure(&strips).unwrap();
+        assert!(m.ratio > 0.75 && m.ratio <= 1.0, "ratio={}", m.ratio);
+    }
+
+    #[test]
+    fn tiling_has_exactly_n_tiles_and_covers_the_extent() {
+        for n in 2..40 {
+            let t = ideal_tiling(&[0.0, 0.0, 4.0, 2.0], n);
+            assert_eq!(t.len(), n);
+            let area: f64 = t.iter().map(|b| (b[2] - b[0]) * (b[3] - b[1])).sum();
+            assert!((area - 8.0).abs() < 1e-9, "n={n}");
+        }
+    }
+
+    #[test]
+    fn identical_boxes_fail_and_bad_statistics_are_rejected() {
+        let same = vec![[0.0, 0.0, 1.0, 1.0]; 4];
+        assert!(measure(&same).unwrap().ratio < 0.01);
+        assert!(measure(&[[0.0, 0.0, 1.0, 1.0], [0.0, 0.0, f64::INFINITY, 1.0]]).is_err());
+        assert!(measure(&[[0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0]]).is_err());
+        // one-dimensional extent still measurable
+        let strips: Vec<[f64; 4]> = (0..4)
+            .map(|i| [0.0, i as f64, 0.0, i as f64 + 1.0])
+            .collect();
+        assert!(measure(&strips).unwrap().ratio > 0.99);
+    }
 }

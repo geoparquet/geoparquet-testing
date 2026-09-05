@@ -9,8 +9,17 @@ Holmes's suggestion of "a clean test suite ... don't pull in duckdb". **Prototyp
 
 ```
 geoparquet-conf check file.parquet [--json] [--class core|covering|distribution]
+geoparquet-conf check s3://bucket/prefix/ --max-files 5 --max-rows 100000 --s3-region us-west-2
+geoparquet-conf check https://host/path/file.parquet     # also gs://, az://, a local directory
 geoparquet-conf corpus ..          # from conformance/: data/ must pass, bad_data/ must fail the mapped test
 ```
+
+Remote objects are read with range requests through the `object_store` crate (anonymous when no
+credentials are in the environment; `--opt key=value` passes any object_store option). The footer
+comes down in one request; the scan fetches whole column chunks, merged per row group and split into
+16 MB parts fetched concurrently. `--max-rows N` reads only the first row groups that hold N rows and
+marks the data tests as sampled, which is how a 700 MB Overture file is checked in a few seconds.
+Exit codes: 0 conformant, 1 a test failed, 2 the tool could not run (unreadable path, bad URL).
 
 Every abstract test of the three conformance classes is implemented and reports pass / fail / skip
 with a message naming the column and the offending value:
@@ -57,8 +66,38 @@ M-series laptop:
 The two tools agree on every file. The wall time includes decoding every WKB value; gpio's full
 `check spec` on the same files takes several seconds because of the DuckDB start-up and sampling.
 
+Remote files, from a laptop (about 5 MB/s to S3):
+
+| Target | Rows read | Bytes / requests | Wall time | Result |
+| --- | --- | --- | --- | --- |
+| opengeospatial/geoparquet `examples/example.parquet` (GitHub raw) | all | 0.03 MB / 1 | 0.26 s | Core conformant |
+| Overture 2026-08-19.0 buildings part-00000 (5.0 M rows, S3) | first 100 000 | 21 MB / 2 | 6 s | 1.1 file: version and logical type fail as expected; Covering: `bbox` fields in the wrong order (see below) |
+| Overture buildings partition (512 objects), `--max-files 2` | 100 000 each | 2 x 21 MB | 12 s | same, per file |
+| source.coop / geoarrow-data 1.0 files (HTTPS) | all | 1 to 8 MB / 1 | 1 to 4 s | 1.0 files fail version and logical type as expected |
+
+## Hardening round (2026-09-06)
+
+Three independent reviews (spec-conformance, hostile input, Rust code/perf) and 150+ crafted files.
+No crash, hang or memory blow-up was found; the verdict and text problems they found are fixed here:
+bounded WKB allocations and count checks, Multi* member type and dimension checks, NaN only allowed
+for empty points, shoelace computed relative to the first vertex, the ideal tiling with exactly n
+tiles, non-finite statistics rejected, one-dimensional extents measured, wrapping row-group boxes
+split, strict `<authority>:<code>` parsing and PROJJSON `ids`, CRS comparison never by name, inconclusive
+CRS comparisons reported as notes instead of failures, `geo-metadata` validated against the published
+schema (and `crs-projjson` against the PROJJSON `crs` definition), the antimeridian form of `bbox`
+required to be justified by the data, a missing `columns` member no longer failing nesting, a missing
+bounding-box column failing only `bbox-paths`, `encoding` missing or non-string failing
+`geometry-column-type`, dictionary-hinted binary columns read as WKB, unread columns reported on every
+data test, tool errors distinguished from conformance failures (exit 2), `--class` validated. Unit
+tests cover the decoder and the metric (`cargo test`).
+
 ## Findings for the spec and the corpus
 
+0. **Every Overture Maps file orders its bbox struct `xmin, xmax, ymin, ymax`.** GeoParquet 1.1 and
+   PR #302 both say the fields "MUST be ordered in this same way" (`xmin, ymin, xmax, ymax`), so the
+   largest producer fails `/conf/covering/bbox-column-structure`, and no validator had ever checked the
+   order. Readers use field names; the order requirement carries no information and should probably
+   go from #302.
 1. `bad_data/crs-invalid-projjson.parquet` (a `crs` without `type`) passes the PROJJSON JSON Schema:
    the schema's top-level `oneOf` also accepts ellipsoids, datums and operations, and `{id, name}` is
    a valid ellipsoid. The OGC test `/conf/core/crs-projjson` should say "PROJJSON **CRS** object"
@@ -82,10 +121,10 @@ The two tools agree on every file. The wall time includes decoding every WKB val
   "pure Rust" costs something real.
 * GeoArrow-encoded geometry columns are not read (GeoParquet 2.0 Core requires WKB, so the
   abstract tests do not need them either).
-* Partitioned datasets, remote files (object_store crate would make this straightforward), a
-  machine-readable report format agreed with OGC CITE, and packaging (cargo install, static
-  binaries, a Python wheel via maturin if wanted).
-* Tests of its own beyond the corpus and the fixture script.
+* A report format agreed with OGC CITE, packaging (cargo install, static binaries, a Python wheel
+  via maturin if wanted), and one arrow pass for files with several geometry columns (today each
+  geometry column is scanned separately).
+* More unit tests; the fixture script and the three reviewers' generators are the current regression set.
 
 ## Building
 
@@ -95,4 +134,5 @@ The two tools agree on every file. The wall time includes decoding every WKB val
 docker run --rm -v "$PWD":/work -w /work rust:1-slim-bookworm cargo build --release
 ```
 
-Dependencies: parquet 59.3 (arrow feature + codecs), arrow, jsonschema, serde_json, clap, anyhow.
+Dependencies: parquet 59.3, arrow-array, object_store (aws, gcp, azure, http), tokio, jsonschema
+(no network features), serde_json, clap, anyhow. MSRV 1.88.

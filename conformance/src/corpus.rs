@@ -7,9 +7,10 @@ use std::path::{Path, PathBuf};
 use anyhow::{Context, Result};
 use serde_json::Value;
 
-use crate::checks::{self, Report, Schemas, Status};
+use crate::checks::{self, Options, Report, Schemas, Status};
+use crate::source::Local;
 
-fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+pub fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
     if let Ok(rd) = std::fs::read_dir(dir) {
         for e in rd.flatten() {
             let p = e.path();
@@ -57,7 +58,7 @@ pub fn run(dir: &Path, schemas: &Schemas, verbose: bool) -> Result<()> {
         good.len()
     );
     for p in &good {
-        let r = checks::run(p, schemas);
+        let r = checks::run(&Local(p.clone()), schemas, &Options::default())?;
         let fails = core_and_covering_failures(&r);
         let rel = p.strip_prefix(dir).unwrap_or(p).display();
         if fails.is_empty() {
@@ -105,7 +106,11 @@ pub fn run(dir: &Path, schemas: &Schemas, verbose: bool) -> Result<()> {
             .get("expected_failure")
             .and_then(Value::as_str)
             .unwrap_or("?");
-        let r = checks::run(&dir.join("bad_data").join(name), schemas);
+        let r = checks::run(
+            &Local(dir.join("bad_data").join(name)),
+            schemas,
+            &Options::default(),
+        )?;
         let fails = core_and_covering_failures(&r);
         let expected = expected_tests(kind);
         let hit: Vec<&str> = fails
@@ -113,7 +118,10 @@ pub fn run(dir: &Path, schemas: &Schemas, verbose: bool) -> Result<()> {
             .copied()
             .filter(|f| expected.contains(f))
             .collect();
-        if expected.is_empty() {
+        if kind == "?" {
+            missed += 1;
+            println!("  MISS  {name}: manifest entry has no expected_failure");
+        } else if expected.is_empty() {
             no_req += 1;
             println!("  n/a   {name} [{kind}]: no OGC requirement; failed {fails:?}");
         } else if !hit.is_empty() {

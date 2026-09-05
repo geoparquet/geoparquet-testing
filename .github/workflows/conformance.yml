@@ -27,9 +27,11 @@ jobs:
           cargo fmt --check
           cargo clippy --release -- -D warnings
 
-      - name: Build
+      - name: Build and unit tests
         working-directory: conformance
-        run: cargo build --release
+        run: |
+          cargo build --release
+          cargo test --release
 
       - name: Run the OGC abstract tests over the corpus
         working-directory: conformance

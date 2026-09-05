@@ -5,7 +5,7 @@ All notable changes to the geoparquet-testing corpus are recorded here.
 ## [Unreleased]
 
 ### Added
-- `conformance/`: experimental Rust checker that runs the OGC GeoParquet 2.0 abstract tests (opengeospatial/geoparquet#304) on a file and over this corpus (`corpus` subcommand exits non-zero when a `data/` file fails Core or a `bad_data/` file is not caught); CI job `conformance`.
+- `conformance/`: experimental Rust checker that runs the OGC GeoParquet 2.0 abstract tests (opengeospatial/geoparquet#304) on a file, a directory, or an object-store URL or prefix (S3, GCS, Azure, HTTPS; `--max-rows` samples large files) and over this corpus (`corpus` subcommand exits non-zero when a `data/` file fails Core or a `bad_data/` file is not caught); CI job `conformance`.
 - `data/bbox/`: 6-element (XYZ) and 8-element (XYZM) `bbox` positives, and an antimeridian-crossing `bbox` (`xmin > xmax`, RFC 7946 §5.2) — validators must accept all three.
 - `data/orientation/`: positives for a polygon with a (clockwise) hole, a MultiPolygon, and a polygon inside a GeometryCollection, all declaring `counterclockwise`.
 - `bad_data/`: `orientation-ccw-declared-hole-ccw`, `orientation-ccw-declared-multipolygon-part-cw` (orientation applies to holes and to every part), `geometry-types-duplicate-entries` (schema `uniqueItems`), `geometry-column-not-in-columns` (a native GEOMETRY column absent from `columns`; new `expected_failure` `geometry_column_undeclared`).

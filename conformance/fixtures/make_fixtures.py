@@ -83,3 +83,51 @@ write("crs_projjson_key_ok", pa.table({"geometry": with_crs("projjson:my_crs")})
 write("crs_geo_epsg4326_parquet_crs84", pa.table({"geometry": with_crs("OGC:CRS84")}), {"geometry": col(crs={**CRS84, "id": {"authority": "EPSG", "code": 4326}})})
 # geometry_types uniqueness and stats: declared empty list with mixed data must pass
 write("types_empty_mixed", pa.table({"geometry": ga.as_wkb(["POINT (1 1)", "LINESTRING (0 0, 1 1)"])}), {"geometry": col(geometry_types=[])})
+
+# --- cases surfaced by the review round (spec, hostile and code reviewers) ---
+import struct
+
+def wkb_le(type_code, body):
+    return b"\x01" + struct.pack("<I", type_code) + body
+
+def wkb_point(x, y, z=None):
+    if z is None:
+        return wkb_le(1, struct.pack("<dd", x, y))
+    return wkb_le(1001, struct.pack("<ddd", x, y, z))
+
+def raw_geometry(values):
+    return ga.wkb().wrap_array(pa.array(values, pa.binary()))
+
+# MultiPolygon whose member is a Point: byte-legal, grammar-illegal -> wkb FAIL
+write("wkb_multipolygon_with_point", pa.table({"geometry": raw_geometry([wkb_le(6, struct.pack("<I", 1) + wkb_point(0, 0))])}),
+      {"geometry": col(geometry_types=["MultiPolygon"])})
+# MultiPoint XY containing a Point Z -> wkb FAIL (member dimension differs)
+write("wkb_multipoint_with_point_z", pa.table({"geometry": raw_geometry([wkb_le(4, struct.pack("<I", 1) + wkb_point(0, 0, 1))])}),
+      {"geometry": col(geometry_types=["MultiPoint"])})
+# Polygon header claiming 4 billion rings -> wkb FAIL, no allocation
+write("wkb_ring_count_bomb", pa.table({"geometry": raw_geometry([wkb_le(3, struct.pack("<I", 0xFFFFFFFF))])}),
+      {"geometry": col(geometry_types=["Polygon"])})
+# 40-deep GeometryCollection is legal WKB -> pass
+deep = wkb_point(1, 1)
+for _ in range(40):
+    deep = wkb_le(7, struct.pack("<I", 1) + deep)
+write("wkb_deep_collection_ok", pa.table({"geometry": raw_geometry([deep])}), {"geometry": col(geometry_types=["GeometryCollection"])})
+# crs that is valid PROJJSON but an ellipsoid, not a CRS -> geo-metadata passes, crs-projjson fails
+write("crs_geo_ellipsoid", pa.table({"geometry": geom}),
+      {"geometry": col(crs={"type": "Ellipsoid", "name": "WGS 84", "semi_major_axis": 6378137, "inverse_flattening": 298.257223563})})
+# antimeridian bbox declared but all data east of 170 -> bbox-array FAIL, bbox-extent pass
+write("bbox_antimeridian_unjustified", pa.table({"geometry": ga.as_wkb(["POINT (172 0)", "POINT (179 5)"])}),
+      {"geometry": col(bbox=[170.0, -10.0, -170.0, 10.0])})
+# geo crs absent, Parquet crs an inline PROJJSON without id -> crs-default inconclusive (note), not FAIL
+crs84_noid = {k: v for k, v in CRS84.items() if k != "id"}
+write("crs_default_parquet_projjson_noid", pa.table({"geometry": with_crs(crs84_noid)}), {"geometry": {"encoding": "WKB", "geometry_types": ["Point"]}})
+# encoding missing / not a string -> geometry-column-type FAIL (step 4), besides the schema failure
+write("encoding_missing", pa.table({"geometry": geom}), {"geometry": {"geometry_types": ["Point"], "crs": CRS84}})
+write("encoding_number", pa.table({"geometry": geom}), {"geometry": {"encoding": 1, "geometry_types": ["Point"], "crs": CRS84}})
+# columns lists a name that exists nowhere in the schema -> no nesting failure (spec does not require it)
+write("phantom_column", pa.table({"geometry": geom}), {"geometry": col(), "ghost": col()})
+# points on one meridian sorted by latitude, 4 row groups of 2 rows: one-dimensional extent, still ordered
+meridian = ga.as_wkb([f"POINT (10 {lat})" for lat in range(8)])
+geo = make_geo_metadata(columns={"geometry": col()})
+write_parquet_deterministic(pa.table({"geometry": meridian}), OUT / "order_degenerate_x.parquet", geo, row_group_size=2)
+print("wrote order_degenerate_x")
