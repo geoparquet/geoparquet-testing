@@ -1,0 +1,36 @@
+name: Conformance checker
+
+on:
+  push:
+    branches: [main]
+    paths: ["conformance/**", "data/**", "bad_data/**"]
+  pull_request:
+    paths: ["conformance/**", "data/**", "bad_data/**"]
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: conformance
+
+      - name: Format and lint
+        working-directory: conformance
+        run: |
+          cargo fmt --check
+          cargo clippy --release -- -D warnings
+
+      - name: Build
+        working-directory: conformance
+        run: cargo build --release
+
+      - name: Run the OGC abstract tests over the corpus
+        working-directory: conformance
+        run: ./target/release/geoparquet-conf corpus ..

@@ -49,6 +49,15 @@ Download from the [releases page](https://github.com/geoparquet/geoparquet-testi
 
 A reader implementation can iterate `bad_data/manifest.json`, attempt to open each file, and assert that the failure mode matches the manifest's `expected_failure` code. See [`bad_data/README.md`](bad_data/README.md) for the controlled vocabulary.
 
+### Running the OGC abstract tests (experimental)
+
+[`conformance/`](conformance/) holds a Rust checker that runs the abstract tests of the OGC
+GeoParquet 2.0 draft ([opengeospatial/geoparquet#304](https://github.com/opengeospatial/geoparquet/pull/304))
+on a file, with only the Apache Arrow `parquet` crate (no DuckDB, GDAL or PROJ). From `conformance/`,
+`cargo run --release -- corpus ..` runs it over this corpus: every `data/` file must pass Core and every
+`bad_data/` file must fail the test mapped from its `expected_failure`. See
+[`conformance/README.md`](conformance/README.md).
+
 ## Regenerating files
 
 ```bash
