@@ -73,6 +73,7 @@ Remote files, from a laptop (about 5 MB/s to S3):
 | opengeospatial/geoparquet `examples/example.parquet` (GitHub raw) | all | 0.03 MB / 1 | 0.26 s | Core conformant |
 | Overture 2026-08-19.0 buildings part-00000 (5.0 M rows, S3) | first 100 000 | 21 MB / 2 | 6 s | 1.1 file: version and logical type fail as expected; Covering: `bbox` fields in the wrong order (see below) |
 | Overture buildings partition (512 objects), `--max-files 2` | 100 000 each | 2 x 21 MB | 12 s | same, per file |
+| Overture 2026-08-19.0 divisions/division_area part-00000 (721 MB, 138 481 polygons, S3), whole file | all | 804 MB / 341 | 240 s | every WKB polygon decoded; same verdicts |
 | source.coop / geoarrow-data 1.0 files (HTTPS) | all | 1 to 8 MB / 1 | 1 to 4 s | 1.0 files fail version and logical type as expected |
 
 ## Hardening round (2026-09-06)
