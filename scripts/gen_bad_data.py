@@ -341,21 +341,21 @@ def register_wkb_violations() -> None:
     register(BadFile(
         filename="wkb-truncated.parquet",
         violation="first row's WKB has 8 bytes chopped from the end",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
         expected_failure="wkb_parse_error",
         writer=writer_truncated,
     ))
     register(BadFile(
         filename="wkb-wrong-type-byte.parquet",
         violation="first row's WKB header declares LineString but body is a Point",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
         expected_failure="wkb_parse_error",
         writer=writer_wrong_type_byte,
     ))
     register(BadFile(
         filename="wkb-with-srid-prefix.parquet",
         violation="first row uses EWKB SRID prefix (not allowed in GeoParquet)",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#wkb-encoding",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#encoding",
         expected_failure="wkb_parse_error",
         writer=writer_with_srid,
     ))
@@ -483,7 +483,7 @@ def register_orientation_violations() -> None:
     register(BadFile(
         filename="orientation-ccw-declared-rings-cw.parquet",
         violation="orientation=counterclockwise declared but polygon rings are wound CW",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#winding-order",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#orientation",
         expected_failure="orientation_mismatch",
         writer=writer_declared_ccw_actual_cw,
     ))
@@ -614,14 +614,14 @@ def register_version_violations() -> None:
     register(BadFile(
         filename="version-unknown.parquet",
         violation="version=99.0.0 is not a known GeoParquet version",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version-and-schema",
         expected_failure="version_unknown",
         writer=writer_unknown_version,
     ))
     register(BadFile(
         filename="version-1-0-with-2-0-features.parquet",
         violation="version=1.0.0 declared but file uses 2.0-only epoch field",
-        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version",
+        spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#version-and-schema",
         expected_failure="version_feature_mismatch",
         writer=writer_v1_with_v2_features,
     ))
