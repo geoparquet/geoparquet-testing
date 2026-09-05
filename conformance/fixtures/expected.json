@@ -548,7 +548,8 @@
       "/conf/covering/bbox-column-structure",
       "/conf/covering/bbox-column-type",
       "/conf/covering/bbox-paths",
-      "/conf/covering/keys"
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
     ]
   },
   "author/phantom_column.parquet": {
@@ -4145,7 +4146,8 @@
       "/conf/covering/bbox-column-structure",
       "/conf/covering/bbox-column-type",
       "/conf/covering/bbox-paths",
-      "/conf/covering/keys"
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
     ]
   },
   "spec/order_3_strips_perfect.parquet": {
@@ -4165,7 +4167,8 @@
       "/conf/covering/bbox-column-structure",
       "/conf/covering/bbox-column-type",
       "/conf/covering/bbox-paths",
-      "/conf/covering/keys"
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
     ]
   },
   "spec/order_5_strips_perfect.parquet": {
@@ -4226,13 +4229,12 @@
       "/conf/covering/bbox-column-structure",
       "/conf/covering/bbox-column-type",
       "/conf/covering/bbox-paths",
-      "/conf/covering/keys"
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
     ]
   },
   "spec/order_random_4.parquet": {
-    "fail": [
-      "/conf/distribution/spatial-order"
-    ],
+    "fail": [],
     "skip": [
       "/conf/core/bbox-array",
       "/conf/core/bbox-crs",
@@ -4248,7 +4250,8 @@
       "/conf/covering/bbox-column-structure",
       "/conf/covering/bbox-column-type",
       "/conf/covering/bbox-paths",
-      "/conf/covering/keys"
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
     ]
   },
   "spec/order_single_rg.parquet": {

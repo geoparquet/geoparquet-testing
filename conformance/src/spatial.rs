@@ -1,11 +1,17 @@
 //! Spatial-order metric of /conf/distribution/spatial-order: skip rate over sample windows,
-//! relative to an ideal tiling of the extent into the same number of row groups. Parameters are
-//! the test suite's, fixed here so the result is reproducible.
+//! relative to an ideal tiling of the extent into the same number of row groups. Parameters
+//! follow `gpio check spatial` (geoparquet-io PR #774): 20 windows spanning 10 % of each
+//! dimension, seed 42, pass at 0.70 of the ideal, verdict withheld below five row groups. The
+//! window sequence itself differs from gpio's (different random generator), so verdicts near
+//! the threshold can differ between the two tools.
 
 pub const WINDOWS: usize = 20;
 pub const WINDOW_FRACTION: f64 = 0.10; // window side as a fraction of the extent side
-pub const SEED: u64 = 20_260_905;
+pub const SEED: u64 = 42;
 pub const PASS_RATIO: f64 = 0.70;
+/// Below this many row groups an ideal grid is a poor model of what a sort can achieve; the
+/// numbers are reported but no verdict is given (gpio #774 does the same).
+pub const MIN_ROW_GROUPS: usize = 5;
 
 pub struct Metric {
     pub row_groups: usize,
@@ -68,6 +74,11 @@ pub fn measure(boxes: &[[f64; 4]]) -> Result<Metric, String> {
     let n = boxes.len();
     if n < 2 {
         return Err(format!("{n} row group(s): pruning cannot be measured"));
+    }
+    if n < MIN_ROW_GROUPS {
+        return Err(format!(
+            "{n} row groups: verdict withheld below {MIN_ROW_GROUPS} (an ideal grid is a poor model for so few; see geoparquet-io #774)"
+        ));
     }
     if let Some(i) = boxes.iter().position(|b| b.iter().any(|v| !v.is_finite())) {
         return Err(format!(
@@ -148,16 +159,19 @@ pub fn measure(boxes: &[[f64; 4]]) -> Result<Metric, String> {
 mod tests {
     use super::*;
 
+    fn grid(side: usize) -> Vec<[f64; 4]> {
+        (0..side * side)
+            .map(|i| {
+                let (c, r) = ((i % side) as f64, (i / side) as f64);
+                [c, r, c + 1.0, r + 1.0]
+            })
+            .collect()
+    }
+
     #[test]
     fn perfect_grids_score_one_and_strips_score_high() {
-        for side in [2usize, 3, 4] {
-            let boxes: Vec<[f64; 4]> = (0..side * side)
-                .map(|i| {
-                    let (c, r) = ((i % side) as f64, (i / side) as f64);
-                    [c, r, c + 1.0, r + 1.0]
-                })
-                .collect();
-            let m = measure(&boxes).unwrap();
+        for side in [3usize, 4, 5] {
+            let m = measure(&grid(side)).unwrap();
             assert!(
                 (m.ratio - 1.0).abs() < 1e-9,
                 "n={} ratio={}",
@@ -167,7 +181,7 @@ mod tests {
             assert!((m.area_factor - 1.0).abs() < 1e-9);
         }
         // equal strips are a tiling too, but a grid prunes square windows better: high, not 1.0
-        let strips: Vec<[f64; 4]> = (0..5)
+        let strips: Vec<[f64; 4]> = (0..6)
             .map(|i| [i as f64, 0.0, i as f64 + 1.0, 1.0])
             .collect();
         let m = measure(&strips).unwrap();
@@ -185,13 +199,24 @@ mod tests {
     }
 
     #[test]
-    fn identical_boxes_fail_and_bad_statistics_are_rejected() {
-        let same = vec![[0.0, 0.0, 1.0, 1.0]; 4];
-        assert!(measure(&same).unwrap().ratio < 0.01);
-        assert!(measure(&[[0.0, 0.0, 1.0, 1.0], [0.0, 0.0, f64::INFINITY, 1.0]]).is_err());
-        assert!(measure(&[[0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0]]).is_err());
+    fn identical_boxes_fail_and_bad_input_is_rejected() {
+        assert!(measure(&vec![[0.0, 0.0, 1.0, 1.0]; 6]).unwrap().ratio < 0.01);
+        let mut inf = grid(3);
+        inf[4][2] = f64::INFINITY;
+        assert!(measure(&inf).unwrap_err().contains("non-finite"));
+        assert!(
+            measure(&vec![[0.0, 0.0, 0.0, 0.0]; 6])
+                .unwrap_err()
+                .contains("single point")
+        );
+        assert!(measure(&grid(2)).unwrap_err().contains("withheld"));
+        assert!(
+            measure(&[[0.0, 0.0, 1.0, 1.0]])
+                .unwrap_err()
+                .contains("cannot be measured")
+        );
         // one-dimensional extent still measurable
-        let strips: Vec<[f64; 4]> = (0..4)
+        let strips: Vec<[f64; 4]> = (0..6)
             .map(|i| [0.0, i as f64, 0.0, i as f64 + 1.0])
             .collect();
         assert!(measure(&strips).unwrap().ratio > 0.99);

@@ -28,7 +28,7 @@ with a message naming the column and the offending value:
 | --- | --- | --- |
 | Core | 20 | `media-type` always skipped (not testable on a file). |
 | Bounding Box Covering | 6 | Skipped as "not claimed" when no column declares `covering`. |
-| Cloud-Optimized Distribution | 2 | `spatial-order` uses the pruning metric with fixed parameters (20 windows of 10 % side, seed, pass at 0.70 of the ideal tiling's skip rate) and also prints the area factor Σ row-group bbox area / extent. |
+| Cloud-Optimized Distribution | 2 | `spatial-order` uses the pruning metric with gpio's parameters (geoparquet-io #774: 20 windows of 10 % side, seed 42, pass at 0.70 of the ideal tiling's skip rate, verdict withheld below five row groups) and also prints the area factor Σ row-group bbox area / extent. The window sequence differs from gpio's, so near-threshold verdicts can differ. |
 
 Design: one pass over the data per geometry column (arrow record batches, WKB decoded by a
 150-line ISO WKB reader that rejects EWKB), everything else from the footer. Schema validation
@@ -60,8 +60,8 @@ M-series laptop:
 | points, random order | 1 000 000 | 10 | 0.41 s | FAIL ratio 0.00 | poor |
 | points, Hilbert | 1 000 000 | 10 | 0.22 s | PASS ratio 0.93 | ordered |
 | 20 clusters, Hilbert | 500 000 | 10 | 0.16 s | PASS ratio 1.00 | ordered |
-| squares, DuckDB ST_Hilbert on polygons | 200 000 | 4 | 0.17 s | FAIL ratio 0.67 | poor |
-| same squares after `gpio sort hilbert` | 200 000 | 4 | 0.17 s | PASS ratio 0.93 | ordered |
+| squares, DuckDB ST_Hilbert on polygons | 200 000 | 4 | 0.17 s | ratio 0.67, verdict withheld (< 5 row groups) | poor |
+| same squares after `gpio sort hilbert` | 200 000 | 4 | 0.17 s | ratio 0.93, verdict withheld (< 5 row groups) | ordered |
 
 The two tools agree on every file. The wall time includes decoding every WKB value; gpio's full
 `check spec` on the same files takes several seconds because of the DuckDB start-up and sampling.
