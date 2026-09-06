@@ -1,0 +1,4376 @@
+{
+  "author/bbox6_z_outside.parquet": {
+    "fail": [
+      "/conf/core/bbox-extent"
+    ],
+    "skip": [
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/bbox8_m_outside.parquet": {
+    "fail": [
+      "/conf/core/bbox-extent"
+    ],
+    "skip": [
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/bbox_antimeridian_point_outside.parquet": {
+    "fail": [
+      "/conf/core/bbox-extent"
+    ],
+    "skip": [
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/bbox_antimeridian_unjustified.parquet": {
+    "fail": [
+      "/conf/core/bbox-array"
+    ],
+    "skip": [
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_missing_column.parquet": {
+    "fail": [
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_mixed_types.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_nested.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_nullness_mismatch.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-repetition"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_nullness_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_second_element_wrong.parquet": {
+    "fail": [
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_two_columns.parquet": {
+    "fail": [
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_undeclared_bbox_column.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_unknown_key.parquet": {
+    "fail": [
+      "/conf/covering/keys"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/cov_wrong_order.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-structure"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_default_parquet_projjson_noid.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_geo_ellipsoid.parquet": {
+    "fail": [
+      "/conf/core/crs-projjson"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_geo_epsg4326_parquet_crs84.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_parquet_authority_mismatch.parquet": {
+    "fail": [
+      "/conf/core/crs-consistency"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_parquet_authority_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_parquet_projjson_inline_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_projjson_key_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_srid0_but_geo_crs84.parquet": {
+    "fail": [
+      "/conf/core/crs-consistency"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/crs_srid0_null_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/encoding_missing.parquet": {
+    "fail": [
+      "/conf/core/column-metadata",
+      "/conf/core/geo-metadata",
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/encoding_number.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata",
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/order_degenerate_x.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/phantom_column.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/types_empty_mixed.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/wkb_deep_collection_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/wkb_multipoint_with_point_z.parquet": {
+    "fail": [
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/wkb_multipolygon_with_point.parquet": {
+    "fail": [
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "author/wkb_ring_count_bomb.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/dict_geometry.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/large_binary_geometry.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/shoelace_precision.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/wkb_4g_nrings.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type",
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/wkb_huge_npts.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type",
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/wkb_huge_nrings.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type",
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/wkb_multipolygon_4g_each.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type",
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "code/wkb_nested_dim_mismatch.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type",
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/baseline.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_6children_wrongorder.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-structure"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_extra_member.parquet": {
+    "fail": [
+      "/conf/covering/keys"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_int32_children.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_nested3.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_nonstruct.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-structure"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_not_object.parquet": {
+    "fail": [
+      "/conf/covering/keys"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_path_len3.parquet": {
+    "fail": [
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_paths_differ.parquet": {
+    "fail": [
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_points_at_geometry.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-structure"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_rep_mismatch.parquet": {
+    "fail": [
+      "/conf/covering/bbox-column-repetition"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_second_wrong.parquet": {
+    "fail": [
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/cov_valid.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_garbage_big100k.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_garbage_brace_notjson.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_garbage_colon.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_garbage_epsg_empty.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_garbage_projjson_missing.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_garbage_srid0.parquet": {
+    "fail": [
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_garbage_srid_empty.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_geography_edges_planar.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_geography_edges_spherical.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_mismatch_authority.parquet": {
+    "fail": [
+      "/conf/core/crs-consistency"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_projjson_badkey.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_projjson_goodkey.parquet": {
+    "fail": [
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/crs_srid0_geonull.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/file_bogus_footerlen.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/file_empty.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/file_footerlen_huge.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/file_geo_bad_utf8.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/file_png.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/file_truncated_head.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/file_truncated_mid.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/misc_50_geo_columns.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/misc_projected_inf.parquet": {
+    "fail": [
+      "/conf/core/crs-consistency"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/misc_undeclared_2nd_geo.parquet": {
+    "fail": [
+      "/conf/core/column-metadata"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_1000_ghost_columns.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_200_rowgroups.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_all_null.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_bbox_5elem.parquet": {
+    "fail": [
+      "/conf/core/bbox-array",
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_bbox_7elem.parquet": {
+    "fail": [
+      "/conf/core/bbox-array",
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_bbox_huge.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_bbox_nan_like.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_bbox_strings.parquet": {
+    "fail": [
+      "/conf/core/bbox-array",
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_crs_array.parquet": {
+    "fail": [
+      "/conf/core/crs-projjson",
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_crs_huge.parquet": {
+    "fail": [
+      "/conf/core/crs-projjson",
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_crs_string.parquet": {
+    "fail": [
+      "/conf/core/crs-projjson",
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_dict_encoded.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_extra_keys.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_geo_50mb.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_geo_deep_json.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/column-metadata",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/file-metadata",
+      "/conf/core/geometry-column-nesting",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/geometry-types",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_geomtypes_10000.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata",
+      "/conf/core/geometry-types"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_large_binary.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_name_dot.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_name_empty.parquet": {
+    "fail": [
+      "/conf/core/file-metadata",
+      "/conf/core/geo-metadata"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_name_spaces.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_name_unicode.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_nested_struct.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-nesting"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_primary_int64.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_repeated_list.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-nesting"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/geometry-column-repetition",
+      "/conf/core/geometry-column-type",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/core/wkb",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/pq_zero_rows.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/stats2_partial_stats.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/stats2_scatter_inf_mask.parquet": {
+    "fail": [
+      "/conf/core/crs-default",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/stats2_scatter_nan.parquet": {
+    "fail": [
+      "/conf/distribution/spatial-order"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys"
+    ]
+  },
+  "hostile/stats2_scatter_ninf_mask.parquet": {
+    "fail": [
+      "/conf/core/crs-default",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/stats_degenerate_extent.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/stats_grid_ordered.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys"
+    ]
+  },
+  "hostile/stats_inf_coord.parquet": {
+    "fail": [
+      "/conf/core/crs-default"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/stats_ok_64.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys"
+    ]
+  },
+  "hostile/stats_scatter.parquet": {
+    "fail": [
+      "/conf/distribution/spatial-order"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys"
+    ]
+  },
+  "hostile/stats_single_rg.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/stats_type_mismatch.parquet": {
+    "fail": [
+      "/conf/core/geometry-types"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_1byte.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_4bytes.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_all_null.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_bad_bom.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_ewkb_srid.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_gc_nested_100k.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_gc_nested_200.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_gc_nested_32.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_gc_nested_33.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_gc_of_empties.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_gc_zero.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_line_empty.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_line_pts_ffffffff.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_mixed_byteorder.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_multiline_zero.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_multipoint_mixed_dim.parquet": {
+    "fail": [
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_multipoint_zero.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_multipoly_parts_ffffffff.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_multipoly_zero.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_point_bigendian.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_point_empty.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_point_inf_xy.parquet": {
+    "fail": [
+      "/conf/core/crs-default"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_pointm_inf_m.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_pointz_inf_z.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_pointz_nan_z.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_pointzm_infnan.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_huge_coords.parquet": {
+    "fail": [
+      "/conf/core/crs-default",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_onering_pts_ffffffff.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_ring_1pt.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_ring_2pt.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_ring_3pt.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_rings_100m.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_rings_500m.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_rings_ffffffff.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_poly_zero_rings.parquet": {
+    "fail": [
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_trailing_bytes.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_0.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_10.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_11.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_12.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_13.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_14.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_15.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_16.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_17.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_8.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_9.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_typecode_huge.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_with_null.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "hostile/wkb_zero_bytes.parquet": {
+    "fail": [
+      "/conf/core/wkb",
+      "/conf/distribution/geospatial-statistics"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/axis_crs84_explicit_lon200.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/bbox6_z_outside.parquet": {
+    "fail": [
+      "/conf/core/bbox-extent"
+    ],
+    "skip": [
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/bbox_antimeridian_unjustified.parquet": {
+    "fail": [
+      "/conf/core/bbox-array"
+    ],
+    "skip": [
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/bbox_empty_geoms.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/bbox_projected_xmin_gt_xmax.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-crs",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/cov_missing_column.parquet": {
+    "fail": [
+      "/conf/covering/bbox-paths"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/cov_ok.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/crs_default_parquet_projjson_ids.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/crs_default_parquet_projjson_noid.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/crs_default_parquet_urn.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/crs_geo_ellipsoid.parquet": {
+    "fail": [
+      "/conf/core/crs-projjson"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/crs_named_same_name_different_crs.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/crs_null_parquet_unset.parquet": {
+    "fail": [
+      "/conf/core/crs-consistency"
+    ],
+    "skip": [
+      "/conf/core/axis-order",
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/crs-projjson",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/encoding_missing.parquet": {
+    "fail": [
+      "/conf/core/column-metadata",
+      "/conf/core/geo-metadata",
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/encoding_number.parquet": {
+    "fail": [
+      "/conf/core/geo-metadata",
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/gc_z_top_level.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/order_10_strips_perfect.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys"
+    ]
+  },
+  "spec/order_2_strips_perfect.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/order_3_strips_perfect.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/order_5_strips_perfect.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys"
+    ]
+  },
+  "spec/order_all_same_point.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/order_degenerate_x.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/order_random_4.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/order_single_rg.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/phantom_column.parquet": {
+    "fail": [],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/wkb_deep_nesting.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/wkb_huge_nrings.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type",
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  },
+  "spec/wkb_multipolygon_with_point.parquet": {
+    "fail": [
+      "/conf/core/geometry-column-type",
+      "/conf/core/wkb"
+    ],
+    "skip": [
+      "/conf/core/bbox-array",
+      "/conf/core/bbox-crs",
+      "/conf/core/bbox-extent",
+      "/conf/core/crs-consistency",
+      "/conf/core/crs-default",
+      "/conf/core/edges-value",
+      "/conf/core/epoch",
+      "/conf/core/media-type",
+      "/conf/core/orientation-rings",
+      "/conf/core/orientation-value",
+      "/conf/covering/bbox-column-nesting",
+      "/conf/covering/bbox-column-repetition",
+      "/conf/covering/bbox-column-structure",
+      "/conf/covering/bbox-column-type",
+      "/conf/covering/bbox-paths",
+      "/conf/covering/keys",
+      "/conf/distribution/geospatial-statistics",
+      "/conf/distribution/spatial-order"
+    ]
+  }
+}
