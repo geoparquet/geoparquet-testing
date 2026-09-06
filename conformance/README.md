@@ -107,6 +107,18 @@ bounding-box column failing only `bbox-paths`, `encoding` missing or non-string 
 data test, tool errors distinguished from conformance failures (exit 2), `--class` validated. Unit
 tests cover the decoder and the metric (`cargo test`).
 
+## In the browser
+
+`web/` is the same checker compiled to WebAssembly behind a one-page UI: drop a file (it never leaves
+the machine) or paste a URL (read with range requests from a Web Worker, so the host must allow
+cross-origin reads; public S3 buckets with CORS, GitHub raw and source.coop do; Overture's bucket
+does). URL checks default to the first 100 000 rows, which is a sample, not a conformance pass.
+Demo: https://jatorre.github.io/geoparquet-testing/ (from the author's fork; where it lives for good
+is a maintainers' decision). Build with `sh web/build.sh` (needs the `wasm32-unknown-unknown`
+target, `wasm-bindgen-cli` matching `Cargo.lock`, clang for zstd, optionally `wasm-opt`); CI builds
+it as the `web-checker` artifact. Only `gpq`'s 1.0 page existed before; there was no 2.0 validator
+one could point at a URL.
+
 ## Test suite
 
 Four layers, all but the last in CI (`.github/workflows/conformance.yml`):
@@ -162,5 +174,6 @@ Four layers, all but the last in CI (`.github/workflows/conformance.yml`):
 docker run --rm -v "$PWD":/work -w /work rust:1-slim-bookworm cargo build --release
 ```
 
-Dependencies: parquet 59.3, arrow-array, object_store (aws, gcp, azure, http), tokio, jsonschema
-(no network features), serde_json, clap, anyhow. MSRV 1.88.
+Dependencies: parquet 59.3, arrow-array, jsonschema (no network features), serde_json, anyhow;
+with the default `cli` feature also clap, object_store (aws, gcp, azure, http), tokio, futures, url;
+with the `wasm` feature wasm-bindgen and js-sys instead. MSRV 1.88.

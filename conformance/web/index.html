@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoParquet 2.0 conformance checker</title>
+<style>
+  :root { color-scheme: light dark; --pass:#2e7d32; --fail:#c62828; --skip:#757575; --bg:#fff; --fg:#222; --card:#f6f6f6; --line:#ddd; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111; --fg:#eee; --card:#1c1c1c; --line:#333; } }
+  body { margin:0; padding:1.5rem; font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); max-width:1100px; margin-inline:auto; }
+  h1 { font-size:1.4rem; margin:0 0 .25rem; } p.sub { margin:0 0 1.25rem; color:var(--skip); }
+  .row { display:flex; gap:1rem; flex-wrap:wrap; }
+  .card { flex:1 1 320px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:1rem; }
+  #drop { border:2px dashed var(--line); border-radius:8px; padding:2rem 1rem; text-align:center; cursor:pointer; }
+  #drop.over { border-color:var(--pass); }
+  input[type=url] { width:100%; box-sizing:border-box; padding:.5rem; font:inherit; }
+  label.small { font-size:.9rem; color:var(--skip); display:block; margin:.5rem 0; }
+  button { font:inherit; padding:.45rem .9rem; border-radius:6px; border:1px solid var(--line); background:var(--bg); color:var(--fg); cursor:pointer; }
+  button.primary { background:#1565c0; color:#fff; border-color:#1565c0; }
+  .examples button { margin:.25rem .25rem 0 0; font-size:.85rem; }
+  #status { margin:1rem 0; min-height:1.4em; }
+  table { width:100%; border-collapse:collapse; font-size:.9rem; margin-top:.5rem; }
+  th, td { text-align:left; padding:.35rem .5rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  td.id { white-space:nowrap; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.85rem; }
+  .pass { color:var(--pass); font-weight:600; } .fail { color:var(--fail); font-weight:600; } .skip { color:var(--skip); }
+  h2.class { font-size:1.05rem; margin:1.25rem 0 .25rem; } h2.class span { font-weight:400; color:var(--skip); }
+  .verdict { font-weight:700; } .conformant { color:var(--pass); } .nonconformant { color:var(--fail); }
+  details { margin-top:1rem; } pre { white-space:pre-wrap; font-size:.8rem; background:var(--card); padding:.75rem; border-radius:6px; overflow:auto; }
+  footer { margin-top:2rem; font-size:.85rem; color:var(--skip); }
+</style>
+</head>
+<body>
+<h1>GeoParquet 2.0 conformance checker</h1>
+<p class="sub">Runs the abstract tests of the OGC GeoParquet 2.0 draft (<a href="https://github.com/opengeospatial/geoparquet/pull/304">opengeospatial/geoparquet#304</a>) in your browser. Files never leave your machine; URLs are read with range requests from the browser, so the server must allow cross-origin reads (public S3 buckets with CORS, GitHub raw, source.coop do).</p>
+<div class="row">
+  <div class="card">
+    <div id="drop">Drop a <code>.parquet</code> file here, or click to choose one</div>
+    <input id="file" type="file" accept=".parquet" hidden>
+  </div>
+  <div class="card">
+    <input id="url" type="url" placeholder="https://… or the https form of an s3 object">
+    <label class="small">Rows to read: <input id="maxrows" type="number" min="0" step="10000" value="100000" style="width:9em"> (0 = all rows; the data tests are then complete instead of sampled)</label>
+    <button id="go" class="primary">Check URL</button>
+    <div class="examples">
+      <button data-url="https://raw.githubusercontent.com/opengeospatial/geoparquet/main/examples/example.parquet">2.0 example file</button>
+      <button data-url="https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-08-19.0/theme=buildings/type=building/part-00000-66390f89-3dae-58d7-a8f9-dd8538b7141a-c000.zstd.parquet">Overture buildings (1.1, 515 MB, sampled)</button>
+      <button data-url="https://data.source.coop/cholmes/overture/geoparquet-country-quad-2/AD.parquet">source.coop 1.0 file</button>
+    </div>
+  </div>
+</div>
+<div id="status"></div>
+<div id="result"></div>
+<footer>Same code as the command-line checker in <a href="https://github.com/geoparquet/geoparquet-testing/pull/6">geoparquet-testing#6</a>, compiled to WebAssembly. Verdicts follow the abstract-test text; a sampled URL run is not a conformance pass.</footer>
+<script src="app.js"></script>
+</body>
+</html>

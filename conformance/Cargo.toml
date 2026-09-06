@@ -5,19 +5,40 @@ edition = "2024"
 rust-version = "1.88"
 description = "GeoParquet 2.0 OGC abstract tests, without DuckDB"
 
+[lib]
+name = "geoparquet_conf"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "geoparquet-conf"
+path = "src/main.rs"
+required-features = ["cli"]
+
+[features]
+default = ["cli"]
+# the command line, including object-store reading
+cli = ["dep:clap", "remote"]
+remote = ["dep:object_store", "dep:tokio", "dep:futures", "dep:url"]
+# the browser build: `cargo build --lib --target wasm32-unknown-unknown --no-default-features --features wasm`
+wasm = ["dep:wasm-bindgen", "dep:js-sys"]
+
 [dependencies]
 anyhow = "1.0.104"
 arrow-array = "59.3.0"
 bytes = "1.12.1"
-clap = { version = "4.6.6", features = ["derive"] }
-futures = "0.3.34"
+clap = { version = "4.6.6", features = ["derive"], optional = true }
+futures = { version = "0.3.34", optional = true }
 jsonschema = { version = "0.53.0", default-features = false }
-object_store = { version = "0.14.1", features = ["aws", "gcp", "azure", "http"] }
+object_store = { version = "0.14.1", features = ["aws", "gcp", "azure", "http"], optional = true }
 parquet = "59.3.0"
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.151"
-tokio = { version = "1.53.1", features = ["rt-multi-thread"] }
-url = "2.5.8"
+tokio = { version = "1.53.1", features = ["rt-multi-thread"], optional = true }
+url = { version = "2.5.8", optional = true }
+
+wasm-bindgen = { version = "=0.2.128", optional = true }
+js-sys = { version = "0.3", optional = true }
 
 [profile.release]
 lto = "thin"

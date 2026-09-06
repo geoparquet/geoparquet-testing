@@ -1,10 +1,4 @@
-mod checks;
-mod corpus;
-mod crs;
-mod source;
-mod spatial;
-mod verify;
-mod wkb;
+use geoparquet_conf::{checks, corpus, source, verify};
 
 use std::path::PathBuf;
 
@@ -13,7 +7,7 @@ use clap::{Parser, Subcommand, ValueEnum};
 use url::Url;
 
 use checks::{Options, Report, Status};
-use source::{Local, Remote, RemoteOptions};
+use source::{Local, RemoteOptions, open_remote};
 
 #[derive(Parser)]
 #[command(
@@ -205,12 +199,11 @@ fn check(
             );
             for u in urls.iter().take(max_files) {
                 let r =
-                    Remote::open(u, &ropts).and_then(|src| checks::run(&src, &schemas, &options));
+                    open_remote(u, &ropts).and_then(|src| checks::run(&src, &schemas, &options));
                 record(r, u.as_str(), &mut reports);
             }
         } else {
-            let r =
-                Remote::open(&url, &ropts).and_then(|src| checks::run(&src, &schemas, &options));
+            let r = open_remote(&url, &ropts).and_then(|src| checks::run(&src, &schemas, &options));
             record(r, &target, &mut reports);
         }
     } else {

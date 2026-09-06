@@ -53,3 +53,36 @@ jobs:
       - name: Verify fixture verdicts against the manifest
         working-directory: conformance
         run: ./target/release/geoparquet-conf verify fixtures/out --manifest fixtures/expected.json
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@1.98.0
+        with:
+          targets: wasm32-unknown-unknown
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: conformance
+
+      - name: Install wasm-bindgen (same version as Cargo.lock) and binaryen
+        working-directory: conformance
+        run: |
+          sudo apt-get -qq install -y binaryen clang >/dev/null
+          VER=$(grep -A1 '^name = "wasm-bindgen"$' Cargo.lock | grep version | sed -E 's/.*"([^"]+)".*/\1/')
+          cargo install --locked wasm-bindgen-cli --version "$VER"
+
+      - name: Build the browser checker
+        working-directory: conformance
+        run: sh web/build.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-checker
+          path: |
+            conformance/web/index.html
+            conformance/web/app.js
+            conformance/web/worker.js
+            conformance/web/pkg/

@@ -201,12 +201,12 @@ mod tests {
 
     #[test]
     fn identical_boxes_fail_and_bad_input_is_rejected() {
-        assert!(measure(&vec![[0.0, 0.0, 1.0, 1.0]; 6]).unwrap().ratio < 0.01);
+        assert!(measure(&[[0.0, 0.0, 1.0, 1.0]; 6]).unwrap().ratio < 0.01);
         let mut inf = grid(3);
         inf[4][2] = f64::INFINITY;
         assert!(measure(&inf).unwrap_err().contains("non-finite"));
         assert!(
-            measure(&vec![[0.0, 0.0, 0.0, 0.0]; 6])
+            measure(&[[0.0, 0.0, 0.0, 0.0]; 6])
                 .unwrap_err()
                 .contains("single point")
         );
