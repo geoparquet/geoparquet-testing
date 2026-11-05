@@ -35,8 +35,13 @@ def _validator() -> Draft7Validator:
     return Draft7Validator(schema, registry=_registry())
 
 
+NATIVE_ONLY_DIR = DATA_DIR / "native_only"
+
+
 def _all_valid_parquets() -> list[Path]:
-    paths = list(DATA_DIR.rglob("*.parquet")) + list(SAMPLES_DIR.glob("*.parquet"))
+    # data/native_only/ holds files without `geo` metadata by design (see test_native_only.py)
+    paths = [p for p in DATA_DIR.rglob("*.parquet") if NATIVE_ONLY_DIR not in p.parents]
+    paths += list(SAMPLES_DIR.glob("*.parquet"))
     return sorted(paths)
 
 

@@ -62,7 +62,7 @@
   "missing-geo-metadata.parquet": {
     "expected_failure": "metadata_missing",
     "spec_clause": "https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#metadata",
-    "violation": "no `geo` key in Parquet schema metadata"
+    "violation": "no `geo` key, and the WKB column has no native GEOMETRY/GEOGRAPHY logical type"
   },
   "missing-primary-column.parquet": {
     "expected_failure": "schema_validation_error",

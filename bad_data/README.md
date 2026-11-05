@@ -37,7 +37,7 @@ Files that deliberately violate the GeoParquet 2.0 spec. Use these to test that 
 | `geometry-types-mismatch-declared-point-actual-linestring.parquet` | geometry_types declares ["Point"] but column contains LineStrings | `geometry_type_mismatch` |
 | `geometry-types-missing-actual-type.parquet` | geometry_types declares ["Polygon"] but column also contains MultiPolygons | `geometry_type_mismatch` |
 | `missing-columns.parquet` | `geo` metadata is missing required `columns` | `schema_validation_error` |
-| `missing-geo-metadata.parquet` | no `geo` key in Parquet schema metadata | `metadata_missing` |
+| `missing-geo-metadata.parquet` | no `geo` key, and the WKB column has no native GEOMETRY/GEOGRAPHY logical type | `metadata_missing` |
 | `missing-primary-column.parquet` | `geo` metadata is missing required `primary_column` | `schema_validation_error` |
 | `missing-version.parquet` | `geo` metadata is missing required `version` field | `schema_validation_error` |
 | `orientation-ccw-declared-hole-ccw.parquet` | orientation=counterclockwise declared but the interior ring is wound CCW (holes must be CW) | `orientation_mismatch` |
