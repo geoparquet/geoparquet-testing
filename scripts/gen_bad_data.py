@@ -241,7 +241,12 @@ def register_missing_metadata_violations() -> None:
     import json as _json
 
     def writer_no_geo(out: Path) -> None:
+        # Plain BYTE_ARRAY WKB: no `geo` key and no native GEOMETRY/GEOGRAPHY logical type, so
+        # nothing identifies the column as geometry. (A file whose geometry column does use the
+        # native types is readable without `geo` metadata; see data/native_only/.)
         table = make_simple_point_table(["POINT (0 0)", "POINT (1 1)"])
+        plain = pa.array(table.column("geometry").combine_chunks().storage.to_pylist(), pa.binary())
+        table = table.set_column(table.schema.get_field_index("geometry"), "geometry", plain)
         write_without_geo_metadata(table, out)
 
     def writer_missing_version(out: Path) -> None:
@@ -271,7 +276,7 @@ def register_missing_metadata_violations() -> None:
 
     register(BadFile(
         filename="missing-geo-metadata.parquet",
-        violation="no `geo` key in Parquet schema metadata",
+        violation="no `geo` key, and the WKB column has no native GEOMETRY/GEOGRAPHY logical type",
         spec_clause="https://github.com/opengeospatial/geoparquet/blob/main/format-specs/geoparquet.md#metadata",
         expected_failure="metadata_missing",
         writer=writer_no_geo,

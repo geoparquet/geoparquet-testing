@@ -19,7 +19,8 @@ Each tier directory has its own README indexing every file and what it tests.
 ## Status
 
 The corpus targets GeoParquet 2.0.0 and every file in `data/` and `samples/` validates
-against the [GeoParquet 2.0.0 JSON Schema](scripts/schemas/) (CI enforces this). Every
+against the [GeoParquet 2.0.0 JSON Schema](scripts/schemas/) (CI enforces this), except
+`data/native_only/`, which holds native `GEOMETRY` files without `geo` metadata on purpose. Every
 geometry column uses the native Parquet `GEOMETRY`/`GEOGRAPHY` logical type, and every
 column whose CRS is not OGC:CRS84 carries that CRS on the native logical type (stamped
 as inline PROJJSON via sedonadb — see `scripts/gen_native_crs.py`) so it agrees with the

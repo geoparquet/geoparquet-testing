@@ -16,6 +16,7 @@ behavior.
 | [`multi_geometry/`](multi_geometry/) | 2 | Two geometry columns per row (footprint + centroid) |
 | [`orientation/`](orientation/) | 2 | Declared `counterclockwise` + undeclared (CW) |
 | [`compression/`](compression/) | 6 | One file per Parquet codec: none, snappy, gzip, brotli, lz4_raw, zstd |
+| [`native_only/`](native_only/) | 2 | Native `GEOMETRY` columns with **no** `geo` metadata, which readers must still read |
 
 Most files in this tier are generated only with `pyarrow` + `geoarrow-pyarrow`
 (no geopandas, no shapely), hold 3–10 rows, and are byte-identical across
